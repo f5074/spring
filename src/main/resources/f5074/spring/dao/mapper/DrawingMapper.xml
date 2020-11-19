@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="f5074.spring.drawing.dao.mapper.DrawingMapper">
+		<resultMap id="drawingMap" type="f5074.spring.common.domain.DrawingVO">
+		<result property="fileId" column="FILE_ID"/>
+		<result property="fileNm" column="FILE_NM"/>
+		<result property="fileContent" column="FILE_CONTENT"/>
+		<result property="fileFullNm" column="FILE_FULL_NM"/>
+		<result property="crtId" column="CRT_ID"/>
+		<result property="crtDt" column="CRT_DT"/>
+		<result property="chgId" column="CHG_ID"/>
+		<result property="chgDt" column="CHG_DT"/>
+	</resultMap>
+	
+	<select id="selectDrawingList" parameterType="int" resultMap="drawingMap">
+		SELECT FILE_ID
+			, FILE_NM
+			, FILE_CONTENT
+			, FILE_FULL_NM
+			, CRT_ID
+			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
+			, CHG_ID
+			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
+		FROM DRAWING
+		ORDER BY FILE_ID ASC
+	</select>
+	
+	<insert id="insertDrawing" parameterType="f5074.spring.common.domain.DrawingVO">
+		INSERT INTO DRAWING 
+		(
+			  FILE_ID
+			, FILE_NM
+			, FILE_CONTENT
+			, FILE_FULL_NM
+			, CRT_ID
+			, CRT_DT
+			, CHG_ID
+			, CHG_DT
+		)
+		VALUES 
+		(
+			  TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
+			, ''
+			, ''
+			, ''
+			, ''
+			, ''
+			, ''
+			, ''
+		)
+	</insert>
+	
+</mapper>
