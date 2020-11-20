@@ -1,16 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/user/drawing/template/header.jsp" />
-<jsp:include page="/WEB-INF/views/user/drawing/template//footer.jsp" />
+<jsp:include page="/WEB-INF/views/user/drawing/template/footer.jsp" />
 
 <script src="<c:url value="/js/drawing/drawingController.js"/>" ></script>
 
+<script>
+	$(document).ready(function() {
+		selectDrawingList(1);
+	})
+</script>
+
+
+<link href="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css" rel="stylesheet">  
+<script src="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
 
 <body class="hold-transition skin-red layout-top-nav">
 	<div class="wrapper">
 		<div class="content-wrapper">
 			<div class="container">
-				<!-- Content -->
+				<!-- Content Header -->
+				<!-- <section class="content-header"></section> -->
+				<!-- .Content Header -->
+				<!-- Content Body-->
 				<section class="content">
 					<div class="row">
 						<!-- Content -->
@@ -19,7 +31,8 @@
 								<div class="box-header with-border">
 									<h3 class="box-title">도면 디자인</h3>
 									<div class="box-tools pull-right">
-										<input type="checkbox" checked data-toggle="toggle" data-size="sm" />
+										<input type="button" class="btn btn-danger" onclick="showTooltip();" value="On" />
+										<input type="button" class="btn btn-secondary" onclick="hideTooltip();" value="Off" />
 									</div>
 								</div>
 								<div class="box-body" style="height: 500px;">
@@ -34,7 +47,7 @@
 								<div class="box-header with-border">
 									<h3 class="box-title">도면 List</h3>
 									<div class="box-tools pull-right">
-										<input type="button" class="btn btn-primary" onclick="selectDrawingList(1);" value="조회">
+										<input type="button" class="btn btn-danger" onclick="selectDrawingList(1);" value="조회">
 									</div>
 								</div>
 								<div class="box-body" style="height: 500px;">
@@ -50,15 +63,14 @@
 								<div class="box-header with-border">
 									<h3 class="box-title">Icon List</h3>
 									<div class="box-tools pull-right">
-										<input type="button" class="btn btn-primary" onclick="showTooltip();" value="On" />
-										<input type="button" class="btn btn-secondary" onclick="hideTooltip();" value="Off" />
+										<input type="checkbox" checked data-toggle="toggle" data-size="sm" />
 									</div>
 								</div>
 								<div class="box-body" style="height: 200px;">
 									<img src="<c:url value="/upload/3153922-200.png"/>" title='설비입니다1' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip" id="ball">
-								 	<img src="<c:url value="/upload/2222900-200.png"/>" title='설비입니다2' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip"> 
-								 	<img src="<c:url value="/upload/1761945-200.png"/>" title='설비입니다3' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip"> 
-									<img src="<c:url value="/upload/2222918-200.png"/>" title='설비입니다4' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip">
+								 	<img src="<c:url value="/upload/2222900-200.png"/>" title='설비입니다2' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip" id="eqp2"> 
+								 	<img src="<c:url value="/upload/1761945-200.png"/>" title='설비입니다3' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip" id="eqp3"> 
+									<img src="<c:url value="/upload/2222918-200.png"/>" title='설비입니다4' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip" id="eqp4">
 								</div>
 							</div>
 						</div>
@@ -75,10 +87,14 @@
 						</div>
 					</div>
 				</section>
+				<!-- Content Body-->
 			</div>
 		</div>
 	</div>
 </body>
+
+
+
 
 <script>
 	let currentDroppable = null;
@@ -141,6 +157,7 @@
 		return false;
 	};
 </script>
+
 <script>
 	// 툴팁을 실행하기 위해서 script에 tooltip함수를 실행해야 한다.
 	$(function() {
@@ -192,5 +209,4 @@ $(function(){
         else  $(".select_subject input").prop('checked', false);
     });
 });
-
 </script>

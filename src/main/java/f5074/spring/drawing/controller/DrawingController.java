@@ -1,5 +1,6 @@
 package f5074.spring.drawing.controller;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,9 +9,11 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +27,9 @@ import f5074.spring.drawing.service.DrawingService;
 
 @Controller
 public class DrawingController {
+	@Value("${savePathDrawing}")
+	private String savePath;
+	
 	@Autowired
 	private DrawingService drawingService;
 	
@@ -34,11 +40,37 @@ public class DrawingController {
 	}
 	
 	
-	@RequestMapping(value = { "insertDrawing", "user/drawing/insertDrawing" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "insertDrawing", "user/drawing/insertDrawing" }, method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	@ResponseBody
-	public int insertDrawing(DrawingVO vo){
+	public int insertDrawing(HttpServletRequest request, DrawingVO vo , @RequestParam(value = "uploadFile") MultipartFile uploadFile) throws IOException{
 		
-//		System.out.println(board.getUserId());
+		String fileFullNm = uploadFile.getOriginalFilename();
+		vo.setFileFullNm(fileFullNm);
+		long fileSize = uploadFile.getSize();
+		String fileNm = vo.getFileNm();
+		String fileContent = vo.getFileContent();
+
+		String dir = request.getServletContext().getRealPath(savePath);
+		
+		// 폴더가 없을경우 폴더 생성
+		File file = new File(dir);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		
+		FileOutputStream fos = new FileOutputStream(dir + uploadFile.getOriginalFilename());
+		InputStream is = uploadFile.getInputStream();
+		try {
+			int readCount = 0;
+			byte[] buffer = new byte[1024];
+			while ((readCount = is.read(buffer)) != -1) {
+				fos.write(buffer, 0, readCount);
+			}
+			fos.close();
+		} catch (Exception ex) {
+			fos.close();
+			throw new RuntimeException("File Save Error");
+		}
 		
 		int res = drawingService.insertDrawing(vo);
 		return res;
@@ -89,7 +121,7 @@ public class DrawingController {
 	@RequestMapping(value = { "downloadDrawingFile", "user/drawing/downloadDrawingFile" }, method = RequestMethod.POST)
 	@ResponseBody
 	public void downloadDrawingFile(@RequestParam("type") String fileName, HttpServletResponse response) throws IOException {
-		System.out.println(fileName);	
+		System.out.println(fileName);
 		String saveFileName = "c:\\DEV\\tmp\\" + fileName;
 		System.out.println(saveFileName);	
 		String contentType = "image/png";

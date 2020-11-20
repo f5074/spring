@@ -1,6 +1,7 @@
 package f5074.spring.filter;
 
 import java.io.IOException;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -14,11 +15,9 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class LoginFilter
  */
-
 public class LoginFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("LoginFilter...Begein");
 		HttpServletResponse res= (HttpServletResponse) response;
 		HttpServletRequest req=(HttpServletRequest) request;
 		
@@ -29,15 +28,8 @@ public class LoginFilter implements Filter {
 			session.setAttribute("loginMsg", "회원 전용 메뉴입니다. 로그인 후 이용해 주세요.");
 			System.out.println("if문");
 			res.sendRedirect("/spring/index");
-			/*String url="member/login.jsp";
-			RequestDispatcher disp = req.getRequestDispatcher(url);
-		    disp.forward(req, res);*/
 		}
-		
 		chain.doFilter(request, response);
-		System.out.println("LoginFilter...done");
-		
-		
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
@@ -46,5 +38,4 @@ public class LoginFilter implements Filter {
 	public void destroy() {
 		
 	}
-
 }

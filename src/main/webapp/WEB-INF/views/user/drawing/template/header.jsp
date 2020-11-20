@@ -44,7 +44,7 @@
 			<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li><a href="/spring/user/drawing/drawingPage">도면 등록</a></li>
-					<li><a href="#">Icon 등록 </a></li>
+					<li><a href="/spring/user/drawing/iconPage">Icon 등록 </a></li>
 					<li><a href="/spring/user/drawing/equipmentPage">도면-장비 관리</a></li>
 				</ul>
 			</div>

@@ -3,7 +3,7 @@
 
 
 <jsp:include page="/WEB-INF/views/user/drawing/template/header.jsp" />
-<jsp:include page="/WEB-INF/views/user/drawing/template//footer.jsp" />
+<jsp:include page="/WEB-INF/views/user/drawing/template/footer.jsp" />
 
 
 <style type="text/css">

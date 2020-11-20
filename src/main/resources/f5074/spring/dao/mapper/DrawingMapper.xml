@@ -39,14 +39,14 @@
 		)
 		VALUES 
 		(
-			  TO_CHAR(SYSDATE, 'YYYYMMDDHH24MISS')
-			, ''
-			, ''
-			, ''
-			, ''
-			, ''
-			, ''
-			, ''
+			  (SELECT NVL(MAX(FILE_ID) + 1, 1) AS FILE_ID FROM DRAWING)
+			, #{fileNm}
+			, #{fileContent}
+			, #{fileFullNm}
+			, 'user1'
+			, SYSDATE
+			, 'user1'
+			, SYSDATE
 		)
 	</insert>
 	
