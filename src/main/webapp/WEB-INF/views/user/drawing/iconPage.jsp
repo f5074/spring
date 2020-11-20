@@ -23,7 +23,7 @@
 							<div class="col-md-12">
 								<div class="box box-danger">
 									<div class="box-header with-border">
-										<h3 class="box-title">도면 등록</h3>
+										<h3 class="box-title">Icon 등록</h3>
 										<div class="box-tools pull-right">
 											<input type="submit" class="btn btn-success" value="추가" />
 											<input type="button" class="btn btn-warning" onclick="selectDrawingList(1);" value="수정" />
@@ -36,19 +36,19 @@
 												<thead>
 													<tr>
 														<td>
-															<input required type="text" id="fileNm" name="fileNm" style="width: 100%; border: none;" placeholder="파일명">
+															<input required type="text" id="fileNm" name="fileNm" style="width: 100%; border: none;" placeholder="Icon명">
 														</td>
 													</tr>
 												</thead>
 												<tbody>
 													<tr>
 														<td>
-															<input  required type="text" id="fileContent" name="fileContent" style="width: 100%; border: none;" placeholder="파일내용">
+															<input  required type="text" id="fileContent" name="fileContent" style="width: 100%; border: none;" placeholder="Icon내용">
 														</td>
 													</tr>
 													<tr>
 														<td>
-															<input type="file" id="uploadFile" name="uploadFile" placeholder="도면 파일(.png)" onchange="setThumbnail(event);">
+															<input type="file" id="uploadFile" name="uploadFile" placeholder="Icon 파일(.png)" onchange="setThumbnail(event);">
 															<div id="image_container" style="width: 150px; height: 80px;"></div>
 														</td>
 													</tr>
