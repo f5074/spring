@@ -77,3 +77,17 @@ function downloadDrawingFile(title) {
 
 	});
 };
+
+function previewImage(event) {
+	var reader = new FileReader();
+	var img;
+	reader.onload = function(event) {
+		img = document.createElement("img");
+		img.setAttribute("src", event.target.result);
+		img.setAttribute("id", 'prieviewImg');
+		img.setAttribute("height", '100%');
+		img.setAttribute("width", '100%');
+		document.querySelector("div#image_container").appendChild(img);
+	};
+	reader.readAsDataURL(event.target.files[0]);
+}

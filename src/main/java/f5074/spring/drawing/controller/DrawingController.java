@@ -28,7 +28,9 @@ import f5074.spring.drawing.service.DrawingService;
 @Controller
 public class DrawingController {
 	@Value("${savePathDrawing}")
-	private String savePath;
+	private String propSavePath;
+	@Value("${userId}")
+	private String propUserId;
 	
 	@Autowired
 	private DrawingService drawingService;
@@ -46,11 +48,13 @@ public class DrawingController {
 		
 		String fileFullNm = uploadFile.getOriginalFilename();
 		vo.setFileFullNm(fileFullNm);
+		vo.setCrtId(propUserId);
+		vo.setChgId(propUserId);
 		long fileSize = uploadFile.getSize();
 		String fileNm = vo.getFileNm();
 		String fileContent = vo.getFileContent();
-
-		String dir = request.getServletContext().getRealPath(savePath);
+		
+		String dir = request.getServletContext().getRealPath(propSavePath);
 		
 		// 폴더가 없을경우 폴더 생성
 		File file = new File(dir);
@@ -120,9 +124,11 @@ public class DrawingController {
 	
 	@RequestMapping(value = { "downloadDrawingFile", "user/drawing/downloadDrawingFile" }, method = RequestMethod.POST)
 	@ResponseBody
-	public void downloadDrawingFile(@RequestParam("type") String fileName, HttpServletResponse response) throws IOException {
+	public void downloadDrawingFile(HttpServletRequest request, HttpServletResponse response, @RequestParam("type") String fileName) throws IOException {
+		String dir = request.getServletContext().getRealPath(propSavePath);
+		
 		System.out.println(fileName);
-		String saveFileName = "c:\\DEV\\tmp\\" + fileName;
+		String saveFileName = dir + fileName;
 		System.out.println(saveFileName);	
 		String contentType = "image/png";
 		long fileLength = 0;

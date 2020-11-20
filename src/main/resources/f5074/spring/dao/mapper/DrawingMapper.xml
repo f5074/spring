@@ -22,7 +22,7 @@
 			, CHG_ID
 			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
 		FROM DRAWING
-		ORDER BY FILE_ID ASC
+		ORDER BY TO_NUMBER(FILE_ID) DESC
 	</select>
 	
 	<insert id="insertDrawing" parameterType="f5074.spring.common.domain.DrawingVO">
@@ -39,13 +39,13 @@
 		)
 		VALUES 
 		(
-			  (SELECT NVL(MAX(FILE_ID) + 1, 1) AS FILE_ID FROM DRAWING)
+			  (SELECT NVL(MAX(TO_NUMBER(FILE_ID)) + 1, 1) AS FILE_ID FROM DRAWING)
 			, #{fileNm}
 			, #{fileContent}
 			, #{fileFullNm}
-			, 'user1'
+			, #{crtId}
 			, SYSDATE
-			, 'user1'
+			, #{chgId}
 			, SYSDATE
 		)
 	</insert>
