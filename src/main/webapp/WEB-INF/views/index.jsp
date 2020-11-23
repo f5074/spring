@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="/WEB-INF/views/user/drawing/template/header.jsp" />
-<jsp:include page="/WEB-INF/views/user/drawing/template//footer.jsp" />
+<jsp:include page="/WEB-INF/views/drawing/template/header.jsp" />
+<jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
+<jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-<script src="<c:url value="/js/drawing/drawingController.js"/>" ></script>
+<script src="<c:url value="/js/drawing/drawingController.js?v=1409"/>" ></script>
 
 <script>
 	$(document).ready(function() {
@@ -41,9 +42,8 @@
 									<h3 class="box-title">도면 정보</h3>
 									<div class="box-tools pull-right"></div>
 								</div>
-								<div class="box-body" style="height: 600px;">
+								<div class="box-body" style="height: 500px;">
 									<div id="image_container">
-										<img src="<c:url value="/upload/1_1.jpg"/>" style="width:100%; height:100%;">
 									</div>
 								</div>
 							</div>

@@ -12,7 +12,7 @@
 		<result property="chgDt" column="CHG_DT"/>
 	</resultMap>
 	
-	<select id="selectDrawingList" parameterType="int" resultMap="drawingMap">
+	<select id="selectDrawingList" parameterType="f5074.spring.common.domain.DrawingVO" resultMap="drawingMap">
 		SELECT FILE_ID
 			, FILE_NM
 			, FILE_CONTENT
@@ -24,6 +24,21 @@
 		FROM DRAWING
 		ORDER BY TO_NUMBER(FILE_ID) DESC
 	</select>
+	
+	<select id="selectDrawingOne" parameterType="f5074.spring.common.domain.DrawingVO" resultMap="drawingMap">
+		SELECT FILE_ID
+			, FILE_NM
+			, FILE_CONTENT
+			, FILE_FULL_NM
+			, CRT_ID
+			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
+			, CHG_ID
+			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
+		FROM DRAWING
+		WHERE FILE_ID = #{fileId}
+		ORDER BY TO_NUMBER(FILE_ID) DESC
+	</select>
+	
 	
 	<insert id="insertDrawing" parameterType="f5074.spring.common.domain.DrawingVO">
 		INSERT INTO DRAWING 

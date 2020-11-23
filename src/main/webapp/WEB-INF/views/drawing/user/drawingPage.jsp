@@ -1,17 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="/WEB-INF/views/user/drawing/template/header.jsp" />
-<jsp:include page="/WEB-INF/views/user/drawing/template/footer.jsp" />
-<jsp:include page="/WEB-INF/views/user/drawing/template/modal.jsp" />
+<jsp:include page="/WEB-INF/views/drawing/template/header.jsp" />
+<jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
+<jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-
-
-<script src="<c:url value="/js/drawing/drawingController.js"/>" ></script>
+<script src="<c:url value="/js/drawing/drawingController.js?v=3"/>" ></script>
 
 <script>
 	$(document).ready(function() {
 		selectDrawingList(2);
-	})
+	});
+	
+	$(document).ready(function() {
+	$("#frm").submit(function(e) {
+	    var form = $('#frm')[0];
+	    // FormData 객체 생성
+	    var formData = new FormData(form);
+	    // 코드로 동적으로 데이터 추가 가능.
+		e.preventDefault();
+		$.ajax({
+			method : "POST",
+			enctype: 'multipart/form-data',
+			url : "insertDrawing",
+			data : formData,
+	        processData: false,
+	        contentType: false,
+	        cache: false,
+	        timeout: 600000,
+			success : function(result) {
+				$("#modalContent").html("저장을 성공했습니다.");
+				$("#modal").modal("show");
+				
+				$("#fileNm").val("");
+				$("#fileContent").val("");
+				$("#uploadFile").val("");
+				$("#prieviewImg").remove();
+				selectDrawingList(2);
+			}
+		})
+	});
+});
+	
 </script>
 
 <style>
@@ -109,38 +138,3 @@
 		</div>
 	</div>
 </body>
-
-
-
-<script>
-
-$(document).ready(function() {
-	$("#frm").submit(function(e) {
-	    var form = $('#frm')[0];
-	    // FormData 객체 생성
-	    var formData = new FormData(form);
-	    // 코드로 동적으로 데이터 추가 가능.
-		e.preventDefault();
-		$.ajax({
-			method : "POST",
-			enctype: 'multipart/form-data',
-			url : "insertDrawing",
-			data : formData,
-	        processData: false,
-	        contentType: false,
-	        cache: false,
-	        timeout: 600000,
-			success : function(result) {
-				$("#modalContent").html("저장을 성공했습니다.");
-				$("#modal").modal("show");
-				
-				$("#fileNm").val("");
-				$("#fileContent").val("");
-				$("#uploadFile").val("");
-				$("#prieviewImg").remove();
-				selectDrawingList(2);
-			}
-		})
-	});
-});
-</script>

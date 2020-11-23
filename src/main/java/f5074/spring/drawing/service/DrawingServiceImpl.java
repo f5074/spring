@@ -15,9 +15,15 @@ public class DrawingServiceImpl implements DrawingService{
 
 	@Transactional
 	@Override
-	public List<DrawingVO> selectDrawingList(int type) {
-		return drawingDao.selectDrawingList(type);
+	public List<DrawingVO> selectDrawingList(DrawingVO vo) {
+		return drawingDao.selectDrawingList(vo);
 	}
+	@Transactional
+	@Override
+	public DrawingVO selectDrawingOne(DrawingVO vo) {
+		return drawingDao.selectDrawingOne(vo);
+	}
+	
 
 	@Transactional
 	@Override

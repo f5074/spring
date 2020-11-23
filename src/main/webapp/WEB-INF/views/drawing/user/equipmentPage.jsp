@@ -1,19 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="/WEB-INF/views/user/drawing/template/header.jsp" />
-<jsp:include page="/WEB-INF/views/user/drawing/template/footer.jsp" />
+<jsp:include page="/WEB-INF/views/drawing/template/header.jsp" />
+<jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
+<jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-<script src="<c:url value="/js/drawing/drawingController.js"/>" ></script>
+<script src="<c:url value="/js/drawing/drawingController.js?v=1400"/>" ></script>
+<script src="<c:url value="/js/drawing/equipmentController.js"/>" ></script>
 
 <script>
 	$(document).ready(function() {
 		selectDrawingList(1);
 	})
 </script>
-
-
-<link href="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/css/bootstrap4-toggle.min.css" rel="stylesheet">  
-<script src="//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.4.0/js/bootstrap4-toggle.min.js"></script>
 
 <body class="hold-transition skin-red layout-top-nav">
 	<div class="wrapper">
@@ -35,35 +33,19 @@
 										<input type="button" class="btn btn-secondary" onclick="hideTooltip();" value="Off" />
 									</div>
 								</div>
-								<div class="box-body" style="height: 500px;">
+								<div class="box-body" style="height: 400px;">
 									<div id="image_container">
-										<img src="<c:url value="/upload/1_1.jpg"/>" style="width:100%; height:100%;">
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4">
-							<div class="box box-danger">
-								<div class="box-header with-border">
-									<h3 class="box-title">도면 List</h3>
-									<div class="box-tools pull-right">
-										<input type="button" class="btn btn-danger" onclick="selectDrawingList(1);" value="조회">
-									</div>
-								</div>
-								<div class="box-body" style="height: 500px;">
-									<div id="drawingView" class="table-responsive" style="width:100%; height:100%; overflow:auto"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<!-- Content -->
 						<div class="col-md-4">
 							<div class="box box-danger">
 								<div class="box-header with-border">
 									<h3 class="box-title">Icon List</h3>
 									<div class="box-tools pull-right">
-										<input type="checkbox" checked data-toggle="toggle" data-size="sm" />
+										<input type="button" class="btn btn-danger" onclick="" value="On" />
+										<input type="button" class="btn btn-secondary" onclick="" value="Off" />
 									</div>
 								</div>
 								<div class="box-body" style="height: 200px;">
@@ -74,6 +56,21 @@
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="box box-danger">
+								<div class="box-header with-border">
+									<h3 class="box-title">도면 List</h3>
+									<div class="box-tools pull-right">
+										<input type="button" class="btn btn-danger" onclick="selectDrawingList(1);" value="조회">
+									</div>
+								</div>
+								<div class="box-body" style="height: 300px;">
+									<div id="drawingView" class="table-responsive" style="width:100%; height:100%; overflow:auto"></div>
+								</div>
+							</div>
+						</div>
 						<!-- Content -->
 						<div class="col-md-8">
 							<div class="box box-danger">
@@ -81,7 +78,7 @@
 									<h3 class="box-title">장비 List</h3>
 									<div class="box-tools pull-right"></div>
 								</div>
-								<div class="box-body" style="height: 200px;">
+								<div class="box-body" style="height: 300px;">
 								</div>
 							</div>
 						</div>
@@ -92,10 +89,6 @@
 		</div>
 	</div>
 </body>
-
-
-
-
 <script>
 	let currentDroppable = null;
 
@@ -156,57 +149,4 @@
 	ball.ondragstart = function() {
 		return false;
 	};
-</script>
-
-<script>
-	// 툴팁을 실행하기 위해서 script에 tooltip함수를 실행해야 한다.
-	$(function() {
-		$('[data-toggle="tooltip"]').tooltip({
-			// fade 효과 사용 여부
-			animation : true,
-			// 툴팁을 나타낼 특정 요소
-			container : false,
-			// 지연 설정
-			delay : {
-				show : 500,
-				hide : 100
-			},
-			// 템필릿
-			html : false,
-			// html false 경우 지정할 요소 selector
-			selector : false,
-			// html true일 경우 사용되는 tooltip 템플릿
-			template : '<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',
-			// 툴팁 트리거(반응) 이벤트
-			trigger : 'hover focus',
-			viewport : {
-				selector : 'body',
-				padding : 0
-			},
-		// 방향 (설정하면 요소의 data-placement 설정의 무효된다.)
-		placement: 'bottom',
-		// 방향 (설정하면 요소의 title 설정의 무효된다.)
-		//title: '',
-		//sanitize: true,
-		//sanitizeFn: null,
-		//whiteList: ''
-		});
-	});
-</script>
-<script>
-function showTooltip() {
-	$('[data-toggle="tooltip"]').tooltip("show");
-}
-
-function hideTooltip() {
-	$('[data-toggle="tooltip"]').tooltip("hide");
-}
-$(function(){
-    $("input:checkbox").click(function(){
-    	alert('');
-        var chk = $(this).is(":checked");//.attr('checked');
-        if(chk) $(".select_subject input").prop('checked', true);
-        else  $(".select_subject input").prop('checked', false);
-    });
-});
 </script>

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,14 +36,14 @@ public class DrawingController {
 	@Autowired
 	private DrawingService drawingService;
 	
-	@RequestMapping(value = { "selectDrawingList", "user/drawing/selectDrawingList" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "selectDrawingList", "drawing/user/selectDrawingList" }, method = RequestMethod.POST)
 	@ResponseBody
-	public List<DrawingVO> selectDrawingList(int type) {
-		return drawingService.selectDrawingList(type);
+	public List<DrawingVO> selectDrawingList(DrawingVO vo) {
+		return drawingService.selectDrawingList(vo);
 	}
 	
 	
-	@RequestMapping(value = { "insertDrawing", "user/drawing/insertDrawing" }, method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	@RequestMapping(value = { "insertDrawing", "drawing/user/insertDrawing" }, method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	@ResponseBody
 	public int insertDrawing(HttpServletRequest request, DrawingVO vo , @RequestParam(value = "uploadFile") MultipartFile uploadFile) throws IOException{
 		
@@ -80,8 +81,17 @@ public class DrawingController {
 		return res;
 	}
 	
-	
-	@RequestMapping(value = { "user/drawing/sendList" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"showImage", "drawing/user/showImage" }, method = RequestMethod.POST)
+	@ResponseBody
+	public DrawingVO showImage( Model model,@RequestParam("fileId") int fileId) {
+		DrawingVO vo = new DrawingVO();
+		vo.setFileId(fileId+"");
+		System.out.println(vo.getFileId());
+		DrawingVO resultVO = drawingService.selectDrawingOne(vo);
+		return resultVO;
+	}
+
+	@RequestMapping(value = { "drawing/user/sendList" }, method = RequestMethod.GET)
 	@ResponseBody
 	public List<SampleVO> sendList() { // List<SampleVO> 형태의 리스트를 반환하는 method sendList
 
@@ -103,7 +113,7 @@ public class DrawingController {
 	}
 
 	@SuppressWarnings("resource")
-	@RequestMapping(value = { "user/drawing/upload" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "drawing/user/upload" }, method = RequestMethod.GET)
 	public String upload(@RequestParam("file") MultipartFile file) throws IOException {
 		System.out.println("파일 이름 : " + file.getOriginalFilename());
 		System.out.println("파일 크기 : " + file.getSize());
@@ -119,10 +129,10 @@ public class DrawingController {
 			fos.close();
 			throw new RuntimeException("file Save Error");
 		}
-		return "user/drawing/drawingDesign";
+		return "drawing/user/drawingDesign";
 	}
 	
-	@RequestMapping(value = { "downloadDrawingFile", "user/drawing/downloadDrawingFile" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "downloadDrawingFile", "drawing/user/downloadDrawingFile" }, method = RequestMethod.POST)
 	@ResponseBody
 	public void downloadDrawingFile(HttpServletRequest request, HttpServletResponse response, @RequestParam("type") String fileName) throws IOException {
 		String dir = request.getServletContext().getRealPath(propSavePath);

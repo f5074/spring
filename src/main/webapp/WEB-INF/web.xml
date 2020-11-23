@@ -31,27 +31,27 @@
   </filter-mapping>
   <error-page>
     <error-code>400</error-code>
-    <location>/WEB-INF/views/error/error.jsp</location>
+    <location>/WEB-INF/views/drawing/template/errorPage.jsp</location>
   </error-page>
   <error-page>
     <error-code>401</error-code>
-    <location>/WEB-INF/views/error/error.jsp</location>
+    <location>/WEB-INF/views/drawing/template/errorPage.jsp</location>
   </error-page>
   <error-page>
     <error-code>404</error-code>
-    <location>/WEB-INF/views/error/error.jsp</location>
+    <location>/WEB-INF/views/drawing/template/errorPage.jsp</location>
   </error-page>
   <error-page>
     <error-code>405</error-code>
-    <location>/WEB-INF/views/error/error.jsp</location>
+    <location>/WEB-INF/views/drawing/template/errorPage.jsp</location>
   </error-page>
   <error-page>
     <error-code>500</error-code>
-    <location>/WEB-INF/views/error/error.jsp</location>
+    <location>/WEB-INF/views/drawing/template/errorPage.jsp</location>
   </error-page>
   <error-page>
     <error-code>503</error-code>
-    <location>/WEB-INF/views/error/error.jsp</location>
+    <location>/WEB-INF/views/drawing/template/errorPage.jsp</location>
   </error-page>
   <context-param>
     <param-name>log4jConfigLocation</param-name>
