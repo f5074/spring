@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="f5074.spring.drawing.dao.mapper.DrawingMapper">
-		<resultMap id="drawingMap" type="f5074.spring.common.domain.DrawingVO">
+	<resultMap id="drawingMap" type="f5074.spring.common.domain.DrawingVO">
 		<result property="fileId" column="FILE_ID"/>
 		<result property="fileNm" column="FILE_NM"/>
 		<result property="fileContent" column="FILE_CONTENT"/>
@@ -11,6 +11,94 @@
 		<result property="chgId" column="CHG_ID"/>
 		<result property="chgDt" column="CHG_DT"/>
 	</resultMap>
+	<resultMap id="iconMap" type="f5074.spring.common.domain.IconVO">
+		<result property="iconId" column="ICON_ID"/>
+		<result property="iconNm" column="ICON_NM"/>
+		<result property="iconContent" column="ICON_CONTENT"/>
+		<result property="iconFullNm" column="ICON_FULL_NM"/>
+		<result property="crtId" column="CRT_ID"/>
+		<result property="crtDt" column="CRT_DT"/>
+		<result property="chgId" column="CHG_ID"/>
+		<result property="chgDt" column="CHG_DT"/>
+	</resultMap>
+	
+	<resultMap id="equipmentMap" type="f5074.spring.common.domain.EquipmentVO">
+		<result property="fileId" column="FILE_ID"/>
+		<result property="iconId" column="ICON_ID"/>
+		<result property="eqpId" column="EQP_ID"/>
+		<result property="eqpNm" column="EQP_NM"/>
+		<result property="eqpContent" column="EQP_CONTENT"/>
+		<result property="eqpWidth" column="EQP_WIDTH"/>
+		<result property="eqpHeight" column="EQP_HEIGHT"/>
+		<result property="eqpX" column="EQP_X"/>
+		<result property="eqpY" column="EQP_Y"/>
+		<result property="eqpVisible" column="EQP_VISIBLE"/>
+		<result property="eqpEnable" column="EQP_ENABLE"/>
+		<result property="crtId" column="CRT_ID"/>
+		<result property="crtDt" column="CRT_DT"/>
+		<result property="chgId" column="CHG_ID"/>
+		<result property="chgDt" column="CHG_DT"/>
+	</resultMap>
+	
+	<select id="selectEquipmentList" parameterType="f5074.spring.common.domain.EquipmentVO" resultMap="equipmentMap">
+		SELECT EQP_ID
+			, FILE_ID
+			, ICON_ID
+			, EQP_NM
+			, EQP_CONTENT
+			, EQP_WIDTH
+			, EQP_HEIGHT
+			, EQP_X
+			, EQP_Y
+			, EQP_VISIBLE
+			, EQP_ENABLE
+			, CRT_ID
+			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
+			, CHG_ID
+			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
+		FROM EQUIPMENT
+		ORDER BY TO_NUMBER(EQP_ID) DESC
+	</select>
+		
+	<insert id="insertEquipment" parameterType="f5074.spring.common.domain.EquipmentVO">
+		INSERT INTO EQUIPMENT 
+		(
+			EQP_ID
+			, FILE_ID
+			, ICON_ID
+			, EQP_NM
+			, EQP_CONTENT
+			, EQP_WIDTH
+			, EQP_HEIGHT
+			, EQP_X
+			, EQP_Y
+			, EQP_VISIBLE
+			, EQP_ENABLE
+			, CRT_ID
+			, CRT_DT
+			, CHG_ID
+			, CHG_DT
+		)
+		VALUES 
+		(
+			(SELECT NVL(MAX(TO_NUMBER(EQP_ID)) + 1, 1) AS EQP_ID FROM EQUIPMENT)
+			, #{fileId}
+			, #{iconId}
+			, #{eqpNm}
+			, #{eqpContent}
+			, #{eqpWidth}
+			, #{eqpHeight}
+			, #{eqpX}
+			, #{eqpY}
+			, #{eqpVisible}
+			, #{eqpEnable}
+			, #{crtId}
+			, SYSDATE
+			, #{chgId}
+			, SYSDATE
+		)
+
+	</insert>
 	
 	<select id="selectDrawingList" parameterType="f5074.spring.common.domain.DrawingVO" resultMap="drawingMap">
 		SELECT FILE_ID
@@ -64,5 +152,44 @@
 			, SYSDATE
 		)
 	</insert>
-	
+	<select id="selectIconList" parameterType="f5074.spring.common.domain.IconVO" resultMap="iconMap">
+		SELECT ICON_ID
+			, ICON_NM
+			, ICON_CONTENT
+			, ICON_FULL_NM
+			, CRT_ID
+			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
+			, CHG_ID
+			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
+		FROM ICON
+		<if test="iconId != null and iconId != ''">
+		WHERE ICON_ID = #{iconId}
+		</if>
+		ORDER BY TO_NUMBER(ICON_ID) DESC
+	</select>	
+	<insert id="insertIcon" parameterType="f5074.spring.common.domain.IconVO">
+		INSERT INTO ICON 
+		(
+			ICON_ID
+			, ICON_NM
+			, ICON_CONTENT
+			, ICON_FULL_NM
+			, CRT_ID
+			, CRT_DT
+			, CHG_ID
+			, CHG_DT
+		)
+		VALUES 
+		(
+			(SELECT NVL(MAX(TO_NUMBER(ICON_ID)) + 1, 1) AS ICON_ID FROM ICON)
+			, #{iconNm}
+			, #{iconContent}
+			, #{iconFullNm}
+			, #{crtId}
+			, SYSDATE
+			, #{chgId}
+			, SYSDATE
+		)
+	</insert>
+
 </mapper>

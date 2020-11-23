@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import f5074.spring.common.domain.DrawingVO;
+import f5074.spring.common.domain.EquipmentVO;
+import f5074.spring.common.domain.IconVO;
 import f5074.spring.common.domain.SampleVO;
 import f5074.spring.drawing.service.DrawingService;
 
@@ -30,6 +32,8 @@ import f5074.spring.drawing.service.DrawingService;
 public class DrawingController {
 	@Value("${savePathDrawing}")
 	private String propSavePath;
+	@Value("${savePathIcon}")
+	private String propSavePathIcon;
 	@Value("${userId}")
 	private String propUserId;
 	
@@ -42,6 +46,11 @@ public class DrawingController {
 		return drawingService.selectDrawingList(vo);
 	}
 	
+	@RequestMapping(value = { "selectIconList", "drawing/user/selectIconList" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<IconVO> selectIconList(IconVO vo) {
+		return drawingService.selectIconList(vo);
+	}
 	
 	@RequestMapping(value = { "insertDrawing", "drawing/user/insertDrawing" }, method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	@ResponseBody
@@ -50,11 +59,7 @@ public class DrawingController {
 		String fileFullNm = uploadFile.getOriginalFilename();
 		vo.setFileFullNm(fileFullNm);
 		vo.setCrtId(propUserId);
-		vo.setChgId(propUserId);
-		long fileSize = uploadFile.getSize();
-		String fileNm = vo.getFileNm();
-		String fileContent = vo.getFileContent();
-		
+		vo.setChgId(propUserId);		
 		String dir = request.getServletContext().getRealPath(propSavePath);
 		
 		// 폴더가 없을경우 폴더 생성
@@ -81,15 +86,73 @@ public class DrawingController {
 		return res;
 	}
 	
+	@RequestMapping(value = { "insertIcon", "drawing/user/insertIcon" }, method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	@ResponseBody
+	public int insertIcon(HttpServletRequest request, IconVO vo , @RequestParam(value = "uploadFile") MultipartFile uploadFile) throws IOException{
+		
+		String iconFullNm = uploadFile.getOriginalFilename();
+		vo.setIconFullNm(iconFullNm);
+		vo.setCrtId(propUserId);
+		vo.setChgId(propUserId);
+		long fileSize = uploadFile.getSize();
+		String fileNm = vo.getIconNm();
+		String fileContent = vo.getIconContent();
+		
+		String dir = request.getServletContext().getRealPath(propSavePathIcon);
+		
+		// 폴더가 없을경우 폴더 생성
+		File file = new File(dir);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+		
+		FileOutputStream fos = new FileOutputStream(dir + uploadFile.getOriginalFilename());
+		InputStream is = uploadFile.getInputStream();
+		try {
+			int readCount = 0;
+			byte[] buffer = new byte[1024];
+			while ((readCount = is.read(buffer)) != -1) {
+				fos.write(buffer, 0, readCount);
+			}
+			fos.close();
+		} catch (Exception ex) {
+			fos.close();
+			throw new RuntimeException("File Save Error");
+		}
+		
+		int res = drawingService.insertIcon(vo);
+		return res;
+	}
+	
+	@RequestMapping(value = {"showIcon", "drawing/user/showIcon" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<IconVO> showIcon(IconVO vo) {
+		List<IconVO> resultList = drawingService.selectIconList(vo);
+		return resultList;
+	}
+	
 	@RequestMapping(value = {"showImage", "drawing/user/showImage" }, method = RequestMethod.POST)
 	@ResponseBody
-	public DrawingVO showImage( Model model,@RequestParam("fileId") int fileId) {
-		DrawingVO vo = new DrawingVO();
-		vo.setFileId(fileId+"");
-		System.out.println(vo.getFileId());
+	public DrawingVO showImage(DrawingVO vo) {
 		DrawingVO resultVO = drawingService.selectDrawingOne(vo);
 		return resultVO;
 	}
+	
+	@RequestMapping(value = { "selectEquipmentList", "drawing/user/selectEquipmentList" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<EquipmentVO> selectEquipmentList(EquipmentVO vo) {
+		return drawingService.selectEquipmentList(vo);
+	}
+	
+	@RequestMapping(value = { "insertEquipment", "drawing/user/insertEquipment" }, method = RequestMethod.POST, consumes = { "multipart/form-data" })
+	@ResponseBody
+	public int insertEquipment(HttpServletRequest request, EquipmentVO vo) throws IOException{
+		vo.setCrtId(propUserId);
+		vo.setChgId(propUserId);
+		int res = drawingService.insertEquipment(vo);
+		return res;
+	}
+	
 
 	@RequestMapping(value = { "drawing/user/sendList" }, method = RequestMethod.GET)
 	@ResponseBody

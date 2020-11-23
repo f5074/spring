@@ -45,7 +45,8 @@
 				<ul class="nav navbar-nav">
 					<li><a href="/spring/drawing/user/drawingPage">도면 등록</a></li>
 					<li><a href="/spring/drawing/user/iconPage">Icon 등록 </a></li>
-					<li><a href="/spring/drawing/user/equipmentPage">도면-장비 관리</a></li>
+					<li><a href="/spring/drawing/user/equipmentPage">장비 등록 </a></li>
+					<li><a href="/spring/drawing/user/managementPage">도면-장비 관리</a></li>
 				</ul>
 			</div>
 		</div>

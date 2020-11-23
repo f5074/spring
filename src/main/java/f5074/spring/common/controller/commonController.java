@@ -20,14 +20,18 @@ public class commonController {
 		return "drawing/user/drawingPage";
 	}
 	
-	@RequestMapping(value = { "equipmentPage", "drawing/user/equipmentPage" }, method = RequestMethod.GET)
-	public String equipmentPage() {
-		return "drawing/user/equipmentPage";
-	}
-	
 	@RequestMapping(value = { "iconPage", "drawing/user/iconPage" }, method = RequestMethod.GET)
 	public String iconPage() {
 		return "drawing/user/iconPage";
 	}
 	
+	@RequestMapping(value = { "equipmentPage", "drawing/user/equipmentPage" }, method = RequestMethod.GET)
+	public String equipmentPage() {
+		return "drawing/user/equipmentPage";
+	}
+	
+	@RequestMapping(value = { "managementPage", "drawing/user/managementPage" }, method = RequestMethod.GET)
+	public String managementPage() {
+		return "drawing/user/managementPage";
+	}
 }
