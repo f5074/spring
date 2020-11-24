@@ -4,7 +4,7 @@
 <jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
 <jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-<script src="<c:url value="/js/drawing/drawingController.js?v=1400"/>" ></script>
+<script src="<c:url value="/js/drawing/drawingController.js?v=11240945"/>" ></script>
 <script src="<c:url value="/js/drawing/equipmentController.js"/>" ></script>
 
 <script>
@@ -78,6 +78,7 @@
 									<div class="box-tools pull-right"></div>
 								</div>
 								<div class="box-body" style="height: 300px;">
+									<div id="equipmentView" class="table-responsive" style="width:100%; height:100%; overflow:auto"></div>
 								</div>
 							</div>
 						</div>

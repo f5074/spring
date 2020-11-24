@@ -4,7 +4,7 @@
 <jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
 <jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-<script src="<c:url value="/js/drawing/drawingController.js?v=1440"/>" ></script>
+<script src="<c:url value="/js/drawing/drawingController.js?v=11240936"/>" ></script>
 
 <script>
 	$(document).ready(function() {

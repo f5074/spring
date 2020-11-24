@@ -5,14 +5,6 @@ function showTooltip() {
 function hideTooltip() {
 	$('[data-toggle="tooltip"]').tooltip("hide");
 }
-$(function(){
-    $("input:checkbox").click(function(){
-    	alert('');
-        var chk = $(this).is(":checked");//.attr('checked');
-        if(chk) $(".select_subject input").prop('checked', true);
-        else  $(".select_subject input").prop('checked', false);
-    });
-});
 
 // 툴팁을 실행하기 위해서 script에 tooltip함수를 실행해야 한다.
 $(function() {

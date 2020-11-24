@@ -8,7 +8,6 @@ import f5074.spring.common.domain.IconVO;
 
 public interface DrawingMapper {
 	List<DrawingVO> selectDrawingList(DrawingVO vo);
-	DrawingVO selectDrawingOne(DrawingVO vo);
 	int insertDrawing(DrawingVO vo);
 	
 	List<IconVO> selectIconList(IconVO vo);

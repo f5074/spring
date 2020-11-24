@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet" href="<c:url value="/css/style.css"/>">
 
 <title>Drawing Design</title>
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -15,6 +14,8 @@
 <link rel="stylesheet" href="<c:url value="/css/AdminLTE.min.css"/>">
 <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="<c:url value="/css/_all-skins.min.css"/>">
+<!-- F5074 Common style -->
+<link rel="stylesheet" href="<c:url value="/css/style.css?v=3"/>">
 
 <!-- JQuery 2.1.4 -->
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>

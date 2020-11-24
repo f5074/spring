@@ -4,7 +4,7 @@
 <jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
 <jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-<script src="<c:url value="/js/drawing/iconController.js?v=11231602"/>" ></script>
+<script src="<c:url value="/js/drawing/drawingController.js?v=11240936"/>" ></script>
 
 <script>
 	$(document).ready(function() {
@@ -44,18 +44,6 @@
 	
 </script>
 
-<style>
-    div.f5074-layout-left {
-        width: 40%;
-        float: left;
-        box-sizing: border-box;
-    }
-    div.f5074-layout-right {
-        width: 60%;
-        float: right;
-        box-sizing: border-box;
-    }
-</style>
 <body class="hold-transition skin-red layout-top-nav">
 	<div class="wrapper">
 		<div class="content-wrapper">

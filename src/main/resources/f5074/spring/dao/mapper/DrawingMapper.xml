@@ -38,8 +38,37 @@
 		<result property="crtDt" column="CRT_DT"/>
 		<result property="chgId" column="CHG_ID"/>
 		<result property="chgDt" column="CHG_DT"/>
-	</resultMap>
-	
+	</resultMap>	
+	<select id="selectDrawingList" parameterType="f5074.spring.common.domain.DrawingVO" resultMap="drawingMap">
+		SELECT FILE_ID
+			, FILE_NM
+			, FILE_CONTENT
+			, FILE_FULL_NM
+			, CRT_ID
+			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
+			, CHG_ID
+			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
+		FROM DRAWING
+		<if test="fileId != null and fileId != ''">
+		WHERE FILE_ID = #{fileId}
+		</if>
+		ORDER BY TO_NUMBER(FILE_ID) DESC
+	</select>
+	<select id="selectIconList" parameterType="f5074.spring.common.domain.IconVO" resultMap="iconMap">
+		SELECT ICON_ID
+			, ICON_NM
+			, ICON_CONTENT
+			, ICON_FULL_NM
+			, CRT_ID
+			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
+			, CHG_ID
+			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
+		FROM ICON
+		<if test="iconId != null and iconId != ''">
+		WHERE ICON_ID = #{iconId}
+		</if>
+		ORDER BY TO_NUMBER(ICON_ID) DESC
+	</select>
 	<select id="selectEquipmentList" parameterType="f5074.spring.common.domain.EquipmentVO" resultMap="equipmentMap">
 		SELECT EQP_ID
 			, FILE_ID
@@ -57,8 +86,60 @@
 			, CHG_ID
 			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
 		FROM EQUIPMENT
+		<if test="fileId != null and fileId != ''">
+		WHERE FILE_ID = #{fileId}
+		</if>
 		ORDER BY TO_NUMBER(EQP_ID) DESC
 	</select>
+	
+	<insert id="insertDrawing" parameterType="f5074.spring.common.domain.DrawingVO">
+		INSERT INTO DRAWING 
+		(
+			  FILE_ID
+			, FILE_NM
+			, FILE_CONTENT
+			, FILE_FULL_NM
+			, CRT_ID
+			, CRT_DT
+			, CHG_ID
+			, CHG_DT
+		)
+		VALUES 
+		(
+			  (SELECT NVL(MAX(TO_NUMBER(FILE_ID)) + 1, 1) AS FILE_ID FROM DRAWING)
+			, #{fileNm}
+			, #{fileContent}
+			, #{fileFullNm}
+			, #{crtId}
+			, SYSDATE
+			, #{chgId}
+			, SYSDATE
+		)
+	</insert>
+	<insert id="insertIcon" parameterType="f5074.spring.common.domain.IconVO">
+		INSERT INTO ICON 
+		(
+			ICON_ID
+			, ICON_NM
+			, ICON_CONTENT
+			, ICON_FULL_NM
+			, CRT_ID
+			, CRT_DT
+			, CHG_ID
+			, CHG_DT
+		)
+		VALUES 
+		(
+			(SELECT NVL(MAX(TO_NUMBER(ICON_ID)) + 1, 1) AS ICON_ID FROM ICON)
+			, #{iconNm}
+			, #{iconContent}
+			, #{iconFullNm}
+			, #{crtId}
+			, SYSDATE
+			, #{chgId}
+			, SYSDATE
+		)
+	</insert>
 		
 	<insert id="insertEquipment" parameterType="f5074.spring.common.domain.EquipmentVO">
 		INSERT INTO EQUIPMENT 
@@ -92,99 +173,6 @@
 			, #{eqpY}
 			, #{eqpVisible}
 			, #{eqpEnable}
-			, #{crtId}
-			, SYSDATE
-			, #{chgId}
-			, SYSDATE
-		)
-
-	</insert>
-	
-	<select id="selectDrawingList" parameterType="f5074.spring.common.domain.DrawingVO" resultMap="drawingMap">
-		SELECT FILE_ID
-			, FILE_NM
-			, FILE_CONTENT
-			, FILE_FULL_NM
-			, CRT_ID
-			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
-			, CHG_ID
-			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
-		FROM DRAWING
-		ORDER BY TO_NUMBER(FILE_ID) DESC
-	</select>
-	
-	<select id="selectDrawingOne" parameterType="f5074.spring.common.domain.DrawingVO" resultMap="drawingMap">
-		SELECT FILE_ID
-			, FILE_NM
-			, FILE_CONTENT
-			, FILE_FULL_NM
-			, CRT_ID
-			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
-			, CHG_ID
-			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
-		FROM DRAWING
-		WHERE FILE_ID = #{fileId}
-		ORDER BY TO_NUMBER(FILE_ID) DESC
-	</select>
-	
-	
-	<insert id="insertDrawing" parameterType="f5074.spring.common.domain.DrawingVO">
-		INSERT INTO DRAWING 
-		(
-			  FILE_ID
-			, FILE_NM
-			, FILE_CONTENT
-			, FILE_FULL_NM
-			, CRT_ID
-			, CRT_DT
-			, CHG_ID
-			, CHG_DT
-		)
-		VALUES 
-		(
-			  (SELECT NVL(MAX(TO_NUMBER(FILE_ID)) + 1, 1) AS FILE_ID FROM DRAWING)
-			, #{fileNm}
-			, #{fileContent}
-			, #{fileFullNm}
-			, #{crtId}
-			, SYSDATE
-			, #{chgId}
-			, SYSDATE
-		)
-	</insert>
-	<select id="selectIconList" parameterType="f5074.spring.common.domain.IconVO" resultMap="iconMap">
-		SELECT ICON_ID
-			, ICON_NM
-			, ICON_CONTENT
-			, ICON_FULL_NM
-			, CRT_ID
-			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
-			, CHG_ID
-			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
-		FROM ICON
-		<if test="iconId != null and iconId != ''">
-		WHERE ICON_ID = #{iconId}
-		</if>
-		ORDER BY TO_NUMBER(ICON_ID) DESC
-	</select>	
-	<insert id="insertIcon" parameterType="f5074.spring.common.domain.IconVO">
-		INSERT INTO ICON 
-		(
-			ICON_ID
-			, ICON_NM
-			, ICON_CONTENT
-			, ICON_FULL_NM
-			, CRT_ID
-			, CRT_DT
-			, CHG_ID
-			, CHG_DT
-		)
-		VALUES 
-		(
-			(SELECT NVL(MAX(TO_NUMBER(ICON_ID)) + 1, 1) AS ICON_ID FROM ICON)
-			, #{iconNm}
-			, #{iconContent}
-			, #{iconFullNm}
 			, #{crtId}
 			, SYSDATE
 			, #{chgId}

@@ -20,12 +20,6 @@ public class DrawingServiceImpl implements DrawingService{
 	public List<DrawingVO> selectDrawingList(DrawingVO vo) {
 		return drawingDao.selectDrawingList(vo);
 	}
-	@Transactional
-	@Override
-	public DrawingVO selectDrawingOne(DrawingVO vo) {
-		return drawingDao.selectDrawingOne(vo);
-	}
-	
 
 	@Transactional
 	@Override
