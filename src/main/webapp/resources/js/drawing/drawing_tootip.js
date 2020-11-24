@@ -1,11 +1,23 @@
+/**
+ * showTooltip
+ * @returns
+ */
 function showTooltip() {
 	$('[data-toggle="tooltip"]').tooltip("show");
 }
 
+/**
+ * hideTooltip
+ * @returns
+ */
 function hideTooltip() {
 	$('[data-toggle="tooltip"]').tooltip("hide");
 }
 
+/**
+ * initTooltip
+ * @returns
+ */
 // 툴팁을 실행하기 위해서 script에 tooltip함수를 실행해야 한다.
 $(function() {
 	$('[data-toggle="tooltip"]').tooltip({

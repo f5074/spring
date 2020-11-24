@@ -104,12 +104,11 @@ function selectIconList() {
 
 
 function selectEquipmentList(fileId) {
-	alert(fileId);
 	$.ajax({
 		url : "selectEquipmentList",
 		method : "POST",
 		data : {
-			fileId : fileId + ""
+			fileId : fileId
 		},
 		success : function(result) {
 			$("#equipmentView").html("<table id='equipmentTable' class='table no-margin'></table>");
@@ -165,8 +164,10 @@ function loadImage(result){
 	img.setAttribute("id", 'prieviewImg');
 	img.setAttribute("height", '100%');
 	img.setAttribute("width", '100%');
+	img.setAttribute("class", 'droppable');
 	if(document.querySelector("#prieviewImg"))document.querySelector("#prieviewImg").remove();
 	document.querySelector("div#image_container").appendChild(img);
+
 }
 
 function loadEquipmentList(fileId) {
@@ -186,8 +187,8 @@ function loadEquipmentList(fileId) {
 													+ "<th style='text-align:center'>설비 내용</th>"
 													+ "<th style='text-align:center'>Width</th>"
 													+ "<th style='text-align:center'>Height</th>"
-													+ "<th style='text-align:center'>X</th>"
-													+ "<th style='text-align:center'>Y</th></tr></thead>");
+													+ "<th style='text-align:center'>Left</th>"
+													+ "<th style='text-align:center'>Top</th></tr></thead>");
 				$("#equipmentTable").append("<tbody>");
 				for (var rowIdx = 0; rowIdx < result.length; rowIdx++) {
 					var fileId = result[rowIdx].fileId;
@@ -210,14 +211,144 @@ function loadEquipmentList(fileId) {
 											+ "<td style='text-align:center'>"+ eqpContent + "</td>"
 											+ "<td style='text-align:center'>"+ eqpWidth + "</td>"
 											+ "<td style='text-align:center'>"+ eqpHeight + "</td>"
-											+ "<td style='text-align:center'>"+ eqpX + "</td>"
-											+ "<td style='text-align:center'>"+ eqpY + "</td>"
+											+ "<td style='text-align:center' id='aaa'>"+ eqpX + "</td>"
+											+ "<td style='text-align:center' id='bbb'>"+ eqpY + "</td>"
 											+ "</tr>");
 				}
 				$("#equipmentTable").append("</tbody>");
 		}
 	});
 };
+
+function loadEquipmentIconList(fileId){
+	$.ajax({
+		url : "selectEquipmentList",
+		method : "POST",
+		data : {
+			fileId : fileId
+		},
+		success : function(result) {
+			for (var rowIdx = 0; rowIdx < result.length; rowIdx++) {
+				var divEl = $('#image_container');
+//				var divX = divEl.offset().left;
+//				var divY = divEl.offset().top;
+				var divX = Number(divEl.position().left);
+				var divY = Number(divEl.position().top);
+				
+//				alert(divX +"," + divY);
+				
+				var fileId = result[rowIdx].fileId;
+				var iconId = result[rowIdx].iconId;
+				var iconFullNm = result[rowIdx].iconFullNm;
+				var eqpId = result[rowIdx].eqpId;
+				var eqpNm = result[rowIdx].eqpNm;
+				var eqpContent = result[rowIdx].eqpContent;
+				var eqpWidth = result[rowIdx].eqpWidth;
+				var eqpHeight = result[rowIdx].eqpHeight;
+				var eqpX = Number(result[rowIdx].eqpX);
+				var eqpY = Number(result[rowIdx].eqpY);
+				var crtId = result[rowIdx].crtId;
+				var crtDt = result[rowIdx].crtDt;
+				
+				img = document.createElement("img");
+				img.setAttribute("src", '/spring/upload/icon/' + iconFullNm);
+				img.setAttribute("width", eqpWidth+'px');
+				img.setAttribute("height", eqpHeight+'px');
+				img.setAttribute("id", eqpId);
+				img.setAttribute("title", eqpContent);
+				img.setAttribute("class", 'droppable');
+				img.setAttribute("data-toggle", 'tooltip');
+//				img.setAttribute("top", '160px');
+//				img.setAttribute("left", '90px');
+//				img.setAttribute("position", 'absolute');
+
+				if(eqpX === 0 && eqpY === 0){
+					if(document.querySelector('#equipmentIconView') != null){
+						document.querySelector('#equipmentIconView').appendChild(img);
+						img.addEventListener('mousemove', onMouseMove);		
+					}	
+				}
+				else{
+					document.querySelector('#image_container').appendChild(img);
+					img.addEventListener('mousemove', onMouseMove);			
+					img.setAttribute("style", "position: absolute; top:"+ (divY + eqpY)+"px; left:"+ (divX +eqpX) +"px;");
+				}
+				
+			}
+			
+			
+		}
+	});	
+};
+
+function onMouseMove(event) {
+	
+	var divEl = $('#image_container');
+	var divX = divEl.offset().left;
+	var divY = divEl.offset().top;
+//	alert(divX + "," + divY);
+	var selectedIcon = document.getElementById($(this).attr("id"));
+	
+//	$('#equipmentTable tr').each(function(){
+//		var day = $(this).find('td').eq(2).html();
+////		alert(day);
+//		$(this).find('td').eq(1).html('aaaa');
+//	});
+	
+	let currentDroppable = null;
+	selectedIcon.onmousedown = function(event) {
+		let shiftX = event.clientX - selectedIcon.getBoundingClientRect().left;
+		let shiftY = event.clientY - selectedIcon.getBoundingClientRect().top;
+		selectedIcon.style.position = 'absolute';
+//		selectedIcon.style.zIndex = 1000;
+		document.body.append(selectedIcon);
+		moveAt(event.pageX, event.pageY);
+		function moveAt(pageX, pageY) {
+			selectedIcon.style.left = pageX - shiftX + 'px';
+			selectedIcon.style.top = pageY - shiftY + 'px';
+			document.getElementById('aaa').innerText = pageX - shiftX - divX;
+			document.getElementById('bbb').innerText = pageY - shiftY - divY;
+		}
+
+		function onMouseMove(event) {
+			moveAt(event.pageX, event.pageY);
+
+			selectedIcon.hidden = true;
+			let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
+			selectedIcon.hidden = false;
+
+			if (!elemBelow)
+				return;
+
+//			let droppableBelow = elemBelow.closest('.droppable');
+//			if (currentDroppable != droppableBelow) {
+//				if (currentDroppable) { // null when we were not over a droppable before this event
+//					leaveDroppable(currentDroppable);
+//				}
+//				currentDroppable = droppableBelow;
+//				if (currentDroppable) { // null if we're not coming over a droppable now
+//					// (maybe just left the droppable)
+//					enterDroppable(currentDroppable);
+//				}
+//			}
+		}
+
+		document.addEventListener('mousemove', onMouseMove);
+
+		selectedIcon.onmouseup = function() {
+			document.removeEventListener('mousemove', onMouseMove);
+			selectedIcon.onmouseup = null;
+		};
+
+	};
+
+	selectedIcon.ondragstart = function() {
+		return false;
+	};
+}
+
+
+
 
 
 /**
@@ -239,6 +370,7 @@ function clickDrawing(fileId) {
 		success : function(result) {
 			loadImage(result);
 			loadEquipmentList(result[0].fileId);
+			loadEquipmentIconList(result[0].fileId);
 		}
 	});
 };

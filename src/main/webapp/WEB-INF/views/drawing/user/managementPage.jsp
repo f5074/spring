@@ -4,8 +4,8 @@
 <jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
 <jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-<script src="<c:url value="/js/drawing/drawingController.js?v=11240945"/>" ></script>
-<script src="<c:url value="/js/drawing/equipmentController.js"/>" ></script>
+<script src="<c:url value="/js/drawing/drawingController.js?v=112401333"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_tootip.js"/>" ></script>
 
 <script>
 	$(document).ready(function() {
@@ -33,7 +33,7 @@
 										<input type="button" class="btn btn-secondary" onclick="hideTooltip();" value="Off" />
 									</div>
 								</div>
-								<div class="box-body" style="height: 400px;">
+								<div class="box-body" style="height: 500px;">
 									<div id="image_container">
 									</div>
 								</div>
@@ -48,10 +48,9 @@
 									</div>
 								</div>
 								<div class="box-body" style="height: 200px;">
-									<img src="<c:url value="/upload/3153922-200.png"/>" title='설비입니다1' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip" id="ball">
-								 	<img src="<c:url value="/upload/2222900-200.png"/>" title='설비입니다2' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip" id="eqp2"> 
-								 	<img src="<c:url value="/upload/1761945-200.png"/>" title='설비입니다3' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip" id="eqp3"> 
-									<img src="<c:url value="/upload/2222918-200.png"/>" title='설비입니다4' class="droppable" style="width: 40px; height: 40px;" data-toggle="tooltip" id="eqp4">
+									<div id="equipmentIconView" class="table-responsive" style="width:100%; height:100%; overflow:auto">
+
+									</div>
 								</div>
 							</div>
 						</div>
@@ -65,7 +64,7 @@
 										<input type="button" class="btn btn-danger" onclick="selectDrawingList(1);" value="조회">
 									</div>
 								</div>
-								<div class="box-body" style="height: 300px;">
+								<div class="box-body" style="height: 200px;">
 									<div id="drawingView" class="table-responsive" style="width:100%; height:100%; overflow:auto"></div>
 								</div>
 							</div>
@@ -77,7 +76,7 @@
 									<h3 class="box-title">장비 List</h3>
 									<div class="box-tools pull-right"></div>
 								</div>
-								<div class="box-body" style="height: 300px;">
+								<div class="box-body" style="height: 200px;">
 									<div id="equipmentView" class="table-responsive" style="width:100%; height:100%; overflow:auto"></div>
 								</div>
 							</div>
@@ -89,64 +88,3 @@
 		</div>
 	</div>
 </body>
-<script>
-	let currentDroppable = null;
-
-	ball.onmousedown = function(event) {
-		let shiftX = event.clientX - ball.getBoundingClientRect().left;
-		let shiftY = event.clientY - ball.getBoundingClientRect().top;
-
-		ball.style.position = 'absolute';
-		ball.style.zIndex = 1000;
-		document.body.append(ball);
-		moveAt(event.pageX, event.pageY);
-		function moveAt(pageX, pageY) {
-			ball.style.left = pageX - shiftX + 'px';
-			ball.style.top = pageY - shiftY + 'px';
-		}
-
-		function onMouseMove(event) {
-			moveAt(event.pageX, event.pageY);
-
-			ball.hidden = true;
-			let elemBelow = document.elementFromPoint(event.clientX,
-					event.clientY);
-			ball.hidden = false;
-
-			if (!elemBelow)
-				return;
-
-			let droppableBelow = elemBelow.closest('.droppable');
-			if (currentDroppable != droppableBelow) {
-				if (currentDroppable) { // null when we were not over a droppable before this event
-					leaveDroppable(currentDroppable);
-				}
-				currentDroppable = droppableBelow;
-				if (currentDroppable) { // null if we're not coming over a droppable now
-					// (maybe just left the droppable)
-					enterDroppable(currentDroppable);
-				}
-			}
-		}
-
-		document.addEventListener('mousemove', onMouseMove);
-
-		ball.onmouseup = function() {
-			document.removeEventListener('mousemove', onMouseMove);
-			ball.onmouseup = null;
-		};
-
-	};
-
-	function enterDroppable(elem) {
-		elem.style.background = 'pink';
-	}
-
-	function leaveDroppable(elem) {
-		elem.style.background = '';
-	}
-
-	ball.ondragstart = function() {
-		return false;
-	};
-</script>

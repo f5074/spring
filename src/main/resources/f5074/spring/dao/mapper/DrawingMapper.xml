@@ -25,6 +25,7 @@
 	<resultMap id="equipmentMap" type="f5074.spring.common.domain.EquipmentVO">
 		<result property="fileId" column="FILE_ID"/>
 		<result property="iconId" column="ICON_ID"/>
+		<result property="iconFullNm" column="ICON_FULL_NM"/>
 		<result property="eqpId" column="EQP_ID"/>
 		<result property="eqpNm" column="EQP_NM"/>
 		<result property="eqpContent" column="EQP_CONTENT"/>
@@ -70,26 +71,29 @@
 		ORDER BY TO_NUMBER(ICON_ID) DESC
 	</select>
 	<select id="selectEquipmentList" parameterType="f5074.spring.common.domain.EquipmentVO" resultMap="equipmentMap">
-		SELECT EQP_ID
-			, FILE_ID
-			, ICON_ID
-			, EQP_NM
-			, EQP_CONTENT
-			, EQP_WIDTH
-			, EQP_HEIGHT
-			, EQP_X
-			, EQP_Y
-			, EQP_VISIBLE
-			, EQP_ENABLE
-			, CRT_ID
-			, TO_CHAR(CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
-			, CHG_ID
-			, TO_CHAR(CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
-		FROM EQUIPMENT
+		SELECT EQP.EQP_ID
+			, EQP.FILE_ID
+			, EQP.ICON_ID
+			, EQP.EQP_NM
+			, EQP.EQP_CONTENT
+			, EQP.EQP_WIDTH
+			, EQP.EQP_HEIGHT
+			, EQP.EQP_X
+			, EQP.EQP_Y
+			, EQP.EQP_VISIBLE
+			, EQP.EQP_ENABLE
+			, EQP.CRT_ID
+			, TO_CHAR(EQP.CRT_DT, 'YYYY-MM-DD HH24:MI:SS') AS CRT_DT
+			, EQP.CHG_ID
+			, TO_CHAR(EQP.CHG_DT, 'YYYY-MM-DD HH24:MI:SS') AS CHG_DT
+			, ICO.ICON_FULL_NM
+		FROM EQUIPMENT EQP
+		INNER JOIN ICON ICO ON EQP.ICON_ID = ICO.ICON_ID
+		INNER JOIN DRAWING DRA ON EQP.FILE_ID = DRA.FILE_ID
 		<if test="fileId != null and fileId != ''">
-		WHERE FILE_ID = #{fileId}
+		WHERE EQP.FILE_ID = #{fileId}
 		</if>
-		ORDER BY TO_NUMBER(EQP_ID) DESC
+		ORDER BY TO_NUMBER(EQP.EQP_ID) DESC
 	</select>
 	
 	<insert id="insertDrawing" parameterType="f5074.spring.common.domain.DrawingVO">

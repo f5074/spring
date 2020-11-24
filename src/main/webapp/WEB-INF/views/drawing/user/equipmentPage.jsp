@@ -13,8 +13,8 @@
 		$("#iconId").val("1");
 		$("#eqpNm").val("장비1");
 		$("#eqpContent").val("장비1 설명");
-		$("#eqpWidth").val("30");
-		$("#eqpHeight").val("30");
+		$("#eqpWidth").val("40");
+		$("#eqpHeight").val("40");
 		$("#eqpX").val("0");
 		$("#eqpY").val("0");
 		$("#eqpEnable").val("Y");
@@ -26,7 +26,6 @@
 		    var form = $('#frm')[0];
 		    // FormData 객체 생성
 		    var formData = new FormData(form);
-		    alert(formData.fileId);
 		    // 코드로 동적으로 데이터 추가 가능.
 			e.preventDefault();
 			$.ajax({
@@ -81,19 +80,19 @@
 														<tbody>
 															<tr>
 																<td><p>도면 ID</p></td>
-																<td><input type="text" id="fileId" name="fileId" style="width: 100%; border: none;" placeholder="도면 ID" required></td>
+																<td><input type="text" id="fileId" name="fileId" style="width: 200px;" placeholder="도면 ID" required></td>
 															</tr>
 															<tr>
 																<td><p>아이콘 ID</p></td>
-																<td><input type="text" id="iconId" name="iconId" style="width: 100%; border: none;" placeholder="Icon ID" required></td>
+																<td><input type="text" id="iconId" name="iconId" style="width: 200px;" placeholder="Icon ID" required></td>
 															</tr>
 															<tr>
 																<td><p>설비 명</p></td>
-																<td><input type="text" id="eqpNm" name="eqpNm" style="width: 100%; border: none;" placeholder="설비 명" required></td>
+																<td><input type="text" id="eqpNm" name="eqpNm" style="width: 200px;" placeholder="설비 명" required></td>
 															</tr>
 															<tr>
 																<td><p>설비 내용</p></td>
-																<td><input type="text" id="eqpContent" name="eqpContent" style="width: 100%; border: none;" placeholder="설비 내용" required></td>
+																<td><input type="text" id="eqpContent" name="eqpContent" style="width: 200px;" placeholder="설비 내용" required></td>
 															</tr>
 														</tbody>
 													</table>
@@ -103,27 +102,41 @@
 														<tbody>
 															<tr>
 																<td><p>설비 Width</p></td>
-																<td><input type="text" id="eqpWidth" name="eqpWidth" style="width: 100%; border: none;" placeholder="설비 Width" required></td>
+																<td><input type="number" id="eqpWidth" name="eqpWidth" style="width: 200px;" placeholder="설비 Width" min='20' max='50' required></td>
 															</tr>
 															<tr>
 																<td><p>설비 Height</p></td>
-																<td><input type="text" id="eqpHeight" name="eqpHeight" style="width: 100%; border: none;" placeholder="설비 Height" required></td>
+																<td><input type="number" id="eqpHeight" name="eqpHeight" style="width: 200px;" placeholder="설비 Height" min='20' max='50' required></td>
 															</tr>
 															<tr>
 																<td><p>설비 X</p></td>
-																<td><input type="text" id="eqpX" name="eqpX" style="width: 100%; border: none;" placeholder="설비 X" required></td>
+																<td><input type="number" id="eqpX" name="eqpX" style="width: 200px;" placeholder="설비 X" required></td>
 															</tr>
 															<tr>
 																<td><p>설비 Y</p></td>
-																<td><input type="text" id="eqpY" name="eqpY" style="width: 100%; border: none;" placeholder="설비 Y" required></td>
+																<td><input type="number" id="eqpY" name="eqpY" style="width: 200px;" placeholder="설비 Y" required></td>
 															</tr>
 															<tr>
 																<td><p>설비 Visible</p></td>
-																<td><input type="text" id="eqpVisible" name="eqpVisible" style="width: 100%; border: none;" placeholder="설비 Visible" required></td>
+																<td>
+																	<div class="form-group">
+																	  <select class="form-control" id="eqpVisible" name="eqpVisible" style="width: 200px;" >
+																	    <option value='Y'>Y</option>
+																	    <option value='N'>N</option>
+																	  </select>
+																	</div>
+																</td>
 															</tr>
 															<tr>
 																<td><p>설비 Enable</p></td>
-																<td><input type="text" id="eqpEnable" name="eqpEnable" style="width: 100%; border: none;" placeholder="설비 Enable" required></td>
+																<td>
+																	<div class="form-group">
+																	  <select class="form-control" id="eqpEnable" name="eqpEnable" style="width: 200px;">
+																	    <option value='Y'>Y</option>
+																	    <option value='N'>N</option>
+																	  </select>
+																	</div>
+																</td>
 															</tr>
 														</tbody>
 													</table>

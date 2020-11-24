@@ -5,6 +5,7 @@
 <jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
 <script src="<c:url value="/js/drawing/drawingController.js?v=11240936"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_tootip.js"/>" ></script>
 
 <script>
 	$(document).ready(function() {
@@ -27,7 +28,8 @@
 							<div class="box box-danger">
 								<div class="box-header with-border">
 									<h3 class="box-title">도면 List</h3>
-									<div class="box-tools pull-right"></div>
+									<div class="box-tools pull-right">
+									</div>
 								</div>
 								<div class="box-body" style="height: 400px;">
 									<div id="drawingView" class="table-responsive" style="width:100%; height:100%; overflow:auto"></div>
@@ -40,7 +42,10 @@
 							<div class="box box-danger">
 								<div class="box-header with-border">
 									<h3 class="box-title">도면 정보</h3>
-									<div class="box-tools pull-right"></div>
+									<div class="box-tools pull-right">
+										<input type="button" class="btn btn-danger" onclick="showTooltip();" value="On" />
+										<input type="button" class="btn btn-secondary" onclick="hideTooltip();" value="Off" />
+									</div>
 								</div>
 								<div class="box-body" style="height: 500px;">
 									<div id="image_container">

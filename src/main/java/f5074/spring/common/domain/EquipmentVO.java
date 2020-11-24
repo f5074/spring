@@ -5,6 +5,8 @@ public class EquipmentVO {
 	private String eqpId;
 	private String fileId;
 	private String iconId;
+	private String iconFullNm;
+
 	private String eqpNm;
 	private String eqpContent;
 	private String eqpWidth;
@@ -26,6 +28,9 @@ public class EquipmentVO {
 	}
 	public String getIconId() {
 		return iconId;
+	}
+	public String getIconFullNm() {
+		return iconFullNm;
 	}
 	public String getEqpNm() {
 		return eqpNm;
@@ -63,6 +68,7 @@ public class EquipmentVO {
 	public String getChgDt() {
 		return chgDt;
 	}
+	
 	public void setEqpId(String eqpId) {
 		this.eqpId = eqpId;
 	}
@@ -71,6 +77,9 @@ public class EquipmentVO {
 	}
 	public void setIconId(String iconId) {
 		this.iconId = iconId;
+	}
+	public void setIconFullNm(String iconFullNm) {
+		this.iconFullNm = iconFullNm;
 	}
 	public void setEqpNm(String eqpNm) {
 		this.eqpNm = eqpNm;
