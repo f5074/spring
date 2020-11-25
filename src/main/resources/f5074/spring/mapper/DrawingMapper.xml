@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="f5074.spring.drawing.dao.mapper.DrawingMapper">
+<mapper namespace="f5074.spring.drawing.mapper.DrawingMapper">
 	<resultMap id="drawingMap" type="f5074.spring.common.domain.DrawingVO">
 		<result property="fileId" column="FILE_ID"/>
 		<result property="fileNm" column="FILE_NM"/>

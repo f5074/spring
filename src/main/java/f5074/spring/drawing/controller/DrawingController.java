@@ -1,15 +1,13 @@
 package f5074.spring.drawing.controller;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import f5074.spring.common.controller.CommonController;
 import f5074.spring.common.domain.DrawingVO;
 import f5074.spring.common.domain.EquipmentVO;
 import f5074.spring.common.domain.IconVO;
-import f5074.spring.drawing.service.DrawingService;
+import f5074.spring.drawing.mapper.DrawingMapper;
 
 @Controller
 public class DrawingController {
@@ -39,24 +36,24 @@ public class DrawingController {
 	private String propUserId;
 	
 	@Autowired
-	private DrawingService drawingService;
+	private DrawingMapper drawingMapper;
 	
 	@RequestMapping(value = { "selectDrawingList", "drawing/user/selectDrawingList" }, method = RequestMethod.POST)
 	@ResponseBody
 	public List<DrawingVO> selectDrawingList(DrawingVO vo) {
-		return drawingService.selectDrawingList(vo);
+		return drawingMapper.selectDrawingList(vo);
 	}
 	
 	@RequestMapping(value = { "selectIconList", "drawing/user/selectIconList" }, method = RequestMethod.POST)
 	@ResponseBody
 	public List<IconVO> selectIconList(IconVO vo) {
-		return drawingService.selectIconList(vo);
+		return drawingMapper.selectIconList(vo);
 	}
 	
 	@RequestMapping(value = { "selectEquipmentList", "drawing/user/selectEquipmentList" }, method = RequestMethod.POST)
 	@ResponseBody
 	public List<EquipmentVO> selectEquipmentList(EquipmentVO vo) {
-		return drawingService.selectEquipmentList(vo);
+		return drawingMapper.selectEquipmentList(vo);
 	}
 	
 	
@@ -71,7 +68,7 @@ public class DrawingController {
 		String dir = request.getServletContext().getRealPath(propSavePath);
 		fileUpload(dir, uploadFile);
 		
-		int res = drawingService.insertDrawing(vo);
+		int res = drawingMapper.insertDrawing(vo);
 		return res;
 	}
 	
@@ -87,7 +84,7 @@ public class DrawingController {
 		String dir = request.getServletContext().getRealPath(propSavePathIcon);
 		fileUpload(dir, uploadFile);
 
-		int res = drawingService.insertIcon(vo);
+		int res = drawingMapper.insertIcon(vo);
 		return res;
 	}
 	
@@ -126,7 +123,7 @@ public class DrawingController {
 	public int insertEquipment(HttpServletRequest request, EquipmentVO vo) throws IOException{
 		vo.setCrtId(propUserId);
 		vo.setChgId(propUserId);
-		int res = drawingService.insertEquipment(vo);
+		int res = drawingMapper.insertEquipment(vo);
 		return res;
 	}
 	
@@ -134,7 +131,7 @@ public class DrawingController {
 	@ResponseBody
 	public int updateEquipment(EquipmentVO vo) throws IOException{
 		vo.setChgId(propUserId);
-		int res = drawingService.updateEquipment(vo);
+		int res = drawingMapper.updateEquipment(vo);
 		return res;
 	}
 	

@@ -1,12 +1,15 @@
-package f5074.spring.drawing.dao;
+package f5074.spring.drawing.mapper;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 
 import f5074.spring.common.domain.DrawingVO;
 import f5074.spring.common.domain.EquipmentVO;
 import f5074.spring.common.domain.IconVO;
 
-public interface DrawingDao {
+@Mapper
+public interface DrawingMapper {
 	List<DrawingVO> selectDrawingList(DrawingVO vo);
 	int insertDrawing(DrawingVO vo);
 	
