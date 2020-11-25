@@ -13,33 +13,34 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet Filter implementation class AdminFilter
+ * Filter implementation class AdminFilter
  */
 public class AdminFilter implements Filter {
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletResponse res= (HttpServletResponse) response;
-		HttpServletRequest req=(HttpServletRequest) request;
-		
-		HttpSession session=req.getSession();
-		String sid=(String) session.getAttribute("sid");
-		//session에 sid가 없으면 login.jsp로 이동
-		if(sid==null){
+		HttpServletResponse res = (HttpServletResponse) response;
+		HttpServletRequest req = (HttpServletRequest) request;
+
+		HttpSession session = req.getSession();
+		String sid = (String) session.getAttribute("sid");
+		// session에 sid가 없으면 login.jsp로 이동
+		if (sid == null) {
 			session.setAttribute("adminMsg", "관리자 전용 메뉴입니다.");
 			res.sendRedirect("/spring/index");
-		}else if(!sid.equals("admin")){
+		} else if (!sid.equals("admin")) {
 			session.setAttribute("adminMsg", "관리자 전용 메뉴입니다.");
 			res.sendRedirect("/spring/index");
 		}
-		
-		chain.doFilter(request, response);	
+
+		chain.doFilter(request, response);
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
-		
+
 	}
+
 	public void destroy() {
-		
+
 	}
 
 }

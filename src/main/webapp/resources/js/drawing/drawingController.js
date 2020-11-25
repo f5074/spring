@@ -157,8 +157,18 @@ function selectEquipmentList(fileId) {
 	});
 };
 
+function clearImage(){
+	$('img').remove();
+}
+
 
 function loadImage(result){
+	
+//	var imageContainer = $('#image_container');
+//	var equipmentIconView = $('#equipmentIconView');
+//	imageContainer.empty();
+//	equipmentIconView.empty();
+	
 	img = document.createElement("img");
 	img.setAttribute("src", '/spring/upload/drawing/' + result[0].fileFullNm);
 	img.setAttribute("id", 'prieviewImg');
@@ -211,8 +221,8 @@ function loadEquipmentList(fileId) {
 											+ "<td style='text-align:center'>"+ eqpContent + "</td>"
 											+ "<td style='text-align:center'>"+ eqpWidth + "</td>"
 											+ "<td style='text-align:center'>"+ eqpHeight + "</td>"
-											+ "<td style='text-align:center' id='aaa'>"+ eqpX + "</td>"
-											+ "<td style='text-align:center' id='bbb'>"+ eqpY + "</td>"
+											+ "<td style='text-align:center' id='X"+eqpId+"'>"+ eqpX + "</td>"
+											+ "<td style='text-align:center' id='Y"+eqpId+"'>"+ eqpY + "</td>"
 											+ "</tr>");
 				}
 				$("#equipmentTable").append("</tbody>");
@@ -282,13 +292,24 @@ function loadEquipmentIconList(fileId){
 };
 
 function onMouseMove(event) {
+	var tdElements = document.getElementById("equipmentTable").getElementsByTagName('td');
+    var len = tdElements.length;
+    var price = 0;
+    for(var i=0; i<len;i++) {
+        var temp = tdElements.item(i).innerText.valueOf();
+        if(temp.indexOf('결제금액') != -1) {
+            price = tdElements.item(i+1).innerText;
+            alert(price);
+        }        
+    }
+	
 	
 	var divEl = $('#image_container');
 	var divX = divEl.offset().left;
 	var divY = divEl.offset().top;
 //	alert(divX + "," + divY);
 	var selectedIcon = document.getElementById($(this).attr("id"));
-	
+	var id = $(this).attr("id");
 //	$('#equipmentTable tr').each(function(){
 //		var day = $(this).find('td').eq(2).html();
 ////		alert(day);
@@ -306,8 +327,11 @@ function onMouseMove(event) {
 		function moveAt(pageX, pageY) {
 			selectedIcon.style.left = pageX - shiftX + 'px';
 			selectedIcon.style.top = pageY - shiftY + 'px';
-			document.getElementById('aaa').innerText = pageX - shiftX - divX;
-			document.getElementById('bbb').innerText = pageY - shiftY - divY;
+			
+			var idX = "X" +id;
+			var idY = "Y"+ id;
+			document.getElementById(idX).innerText = pageX - shiftX - divX;
+			document.getElementById(idY).innerText = pageY - shiftY - divY;
 		}
 
 		function onMouseMove(event) {
@@ -368,6 +392,7 @@ function clickDrawing(fileId) {
 			alert('error');
 		},
 		success : function(result) {
+			clearImage();
 			loadImage(result);
 			loadEquipmentList(result[0].fileId);
 			loadEquipmentIconList(result[0].fileId);

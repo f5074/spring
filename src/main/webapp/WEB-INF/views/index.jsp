@@ -62,3 +62,26 @@
 	</div>
 </body>
 
+<c:choose>
+	<c:when test="${loginMsg!=null }">
+		<script>
+		
+		$("#modalContent").html("${loginMsg}");
+		$("#modal").modal({show:true});
+		
+		<%session.removeAttribute("loginMsg");%>
+			
+		</script>
+	</c:when>
+</c:choose> 
+<c:choose>
+	<c:when test="${adminMsg!=null }">
+		<script>
+		$("#modalContent").html("${adminMsg}");
+		$("#modal").modal('show');
+		
+		<%session.removeAttribute("adminMsg");%>
+			
+		</script>
+	</c:when>
+</c:choose>

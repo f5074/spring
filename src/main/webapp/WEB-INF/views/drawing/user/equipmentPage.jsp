@@ -11,8 +11,7 @@
 		selectEquipmentList();
 		$("#fileId").val("1");
 		$("#iconId").val("1");
-		$("#eqpNm").val("장비1");
-		$("#eqpContent").val("장비1 설명");
+
 		$("#eqpWidth").val("40");
 		$("#eqpHeight").val("40");
 		$("#eqpX").val("0");
@@ -69,7 +68,7 @@
 									<div class="box-header with-border">
 										<h3 class="box-title">장비 등록</h3>
 										<div class="box-tools pull-right">
-											<input type="submit" class="btn btn-success" value="추가" />
+											<input type="submit" class="btn btn-success" value="등록" />
 										</div>
 									</div>
 									<div class="box-body" style="height: 400px;">
@@ -80,19 +79,29 @@
 														<tbody>
 															<tr>
 																<td><p>도면 ID</p></td>
-																<td><input type="text" id="fileId" name="fileId" style="width: 200px;" placeholder="도면 ID" required></td>
+																<td><input type="text" id="fileId" name="fileId" style="width: 200px; height:30px;" placeholder="도면 ID" required></td>
 															</tr>
 															<tr>
 																<td><p>아이콘 ID</p></td>
-																<td><input type="text" id="iconId" name="iconId" style="width: 200px;" placeholder="Icon ID" required></td>
+																<td>
+																	<div class="form-group">
+																	  <select class="form-control" id="iconId" name="iconId" style="width: 200px;">
+																	    <option value='1'>1</option>
+																	    <option value='2'>2</option>
+																	    <option value='3'>3</option>
+																	    <option value='4'>4</option>
+																	    <option value='5'>5</option>
+																	  </select>
+																	</div>
+																</td>
 															</tr>
 															<tr>
 																<td><p>설비 명</p></td>
-																<td><input type="text" id="eqpNm" name="eqpNm" style="width: 200px;" placeholder="설비 명" required></td>
+																<td><input type="text" id="eqpNm" name="eqpNm" style="width: 200px; height:30px;" placeholder="설비 명" required></td>
 															</tr>
 															<tr>
 																<td><p>설비 내용</p></td>
-																<td><input type="text" id="eqpContent" name="eqpContent" style="width: 200px;" placeholder="설비 내용" required></td>
+																<td><input type="text" id="eqpContent" name="eqpContent" style="width: 200px; height:30px;" placeholder="설비 내용" required></td>
 															</tr>
 														</tbody>
 													</table>

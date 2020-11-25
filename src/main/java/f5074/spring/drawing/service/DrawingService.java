@@ -15,4 +15,5 @@ public interface DrawingService {
 	
 	List<EquipmentVO> selectEquipmentList(EquipmentVO vo);
 	int insertEquipment(EquipmentVO vo);
+	int updateEquipment(EquipmentVO vo);
 }

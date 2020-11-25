@@ -62,7 +62,7 @@
 									<div class="box-header with-border">
 										<h3 class="box-title">도면 등록</h3>
 										<div class="box-tools pull-right">
-											<input type="submit" class="btn btn-success" value="추가" />
+											<input type="submit" class="btn btn-success" value="등록" />
 										</div>
 									</div>
 									<div class="box-body" style="height: 400px;">

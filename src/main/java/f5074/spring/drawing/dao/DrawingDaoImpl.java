@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import f5074.spring.common.domain.DrawingVO;
 import f5074.spring.common.domain.EquipmentVO;
@@ -42,6 +43,11 @@ public class DrawingDaoImpl implements DrawingDao{
 	@Override
 	public int insertEquipment(EquipmentVO vo) {
 		return drawingMapper.insertEquipment(vo);
+	}
+	
+	@Override
+	public int updateEquipment(EquipmentVO vo) {
+		return drawingMapper.updateEquipment(vo);
 	}
 
 }

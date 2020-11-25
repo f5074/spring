@@ -48,4 +48,10 @@ public class DrawingServiceImpl implements DrawingService{
 	public int insertEquipment(EquipmentVO vo) {
 		return drawingDao.insertEquipment(vo);
 	}
+	
+	@Transactional
+	@Override
+	public int updateEquipment(EquipmentVO vo) {
+		return drawingDao.updateEquipment(vo);
+	}
 }

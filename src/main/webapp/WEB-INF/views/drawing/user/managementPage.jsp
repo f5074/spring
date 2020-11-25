@@ -12,6 +12,40 @@
 		selectDrawingList(1);
 	})
 </script>
+<script>
+	function updateEquipment(){
+		var myTableArray = [];
+		
+		$("#equipmentView tr").each(function() {
+	       var arrayOfThisRow = [];
+	       var tableData = $(this).find('td');
+	       if (tableData.length > 0) {
+	           tableData.each(function() {
+	        	   arrayOfThisRow.push($(this).text()); 
+	        	   });
+	           myTableArray.push(arrayOfThisRow);
+	       }
+		});
+		
+		for (var rowIdx = 0; rowIdx < myTableArray.length; rowIdx++) {
+			$.ajax({
+				url : "updateEquipment",
+				method : "POST",
+				data : {
+					eqpX : myTableArray[rowIdx][7],
+					eqpY : myTableArray[rowIdx][8],
+					eqpId: myTableArray[rowIdx][2]
+				},
+				success : function(result) {
+				}
+			});
+			$("#modalContent").html("등록한 설비를 모두 저장 했습니다.");
+			$("#modal").modal("show");	
+		}
+		
+		
+	};
+</script>
 
 <body class="hold-transition skin-red layout-top-nav">
 	<div class="wrapper">
@@ -74,7 +108,9 @@
 							<div class="box box-danger">
 								<div class="box-header with-border">
 									<h3 class="box-title">장비 List</h3>
-									<div class="box-tools pull-right"></div>
+									<div class="box-tools pull-right">
+										<input type="button" class="btn btn-success" onclick="updateEquipment();" value="저장">
+									</div>
 								</div>
 								<div class="box-body" style="height: 200px;">
 									<div id="equipmentView" class="table-responsive" style="width:100%; height:100%; overflow:auto"></div>

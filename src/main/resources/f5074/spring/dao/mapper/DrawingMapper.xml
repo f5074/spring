@@ -183,5 +183,12 @@
 			, SYSDATE
 		)
 	</insert>
-
+	<update id="updateEquipment" parameterType="f5074.spring.common.domain.EquipmentVO">
+		UPDATE EQUIPMENT
+		SET EQP_X = #{eqpX}
+			, EQP_Y = #{eqpY}
+			, CHG_ID = #{chgId}
+			, CHG_DT = SYSDATE
+		WHERE EQP_ID = #{eqpId}
+	</update>
 </mapper>
