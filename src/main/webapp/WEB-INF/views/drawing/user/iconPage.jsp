@@ -4,7 +4,8 @@
 <jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
 <jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-<script src="<c:url value="/js/drawing/drawingController.js?v=11240936"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_common.js?v=12030900"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_tootip.js?v=12030900"/>" ></script>
 
 <script>
 	$(document).ready(function() {
@@ -12,36 +13,33 @@
 	});
 	
 	$(document).ready(function() {
-	$("#frm").submit(function(e) {
-	    var form = $('#frm')[0];
-	    // FormData 객체 생성
-	    var formData = new FormData(form);
-	   
-	    // 코드로 동적으로 데이터 추가 가능.
-		e.preventDefault();
-		$.ajax({
-			method : "POST",
-			enctype: 'multipart/form-data',
-			url : "insertIcon",
-			data : formData,
-	        processData: false,
-	        contentType: false,
-	        cache: false,
-	        timeout: 600000,
-			success : function(result) {
-				$("#modalContent").html("저장을 성공했습니다.");
-				$("#modal").modal("show");
-				
-				$("#iconNm").val("");
-				$("#iconContent").val("");
-				$("#uploadFile").val("");
-				$("#prieviewImg").remove();
-				selectIconList();
-			}
-		})
+		$("#frm").submit(function(e) {
+			var form = $('#frm')[0];
+			// FormData 객체 생성
+			var formData = new FormData(form);
+			// 코드로 동적으로 데이터 추가 가능.
+			e.preventDefault();
+			$.ajax({
+				method : "POST",
+				enctype : 'multipart/form-data',
+				url : "insertIcon",
+				data : formData,
+				processData : false,
+				contentType : false,
+				cache : false,
+				timeout : 600000,
+				success : function(result) {
+					$("#modalContent").html("저장을 성공했습니다.");
+					$("#modal").modal("show");
+					$("#iconNm").val("");
+					$("#iconContent").val("");
+					$("#uploadFile").val("");
+					$("#prieviewImg").remove();
+					selectIconList();
+				}
+			})
+		});
 	});
-});
-	
 </script>
 
 <body class="hold-transition skin-red layout-top-nav">
@@ -67,9 +65,9 @@
 									</div>
 									<div class="box-body" style="height: 400px;">
 										<div class="table-responsive" style="width:100%; height:100%; overflow:auto">
-										    <div>
-										        <div class="f5074-layout-left">
-										        	<table class="table no-margin">
+											<div>
+												<div class="f5074-layout-left">
+													<table class="table no-margin">
 														<thead>
 															<tr>
 																<td><p>Icon 명</p></td>
@@ -87,12 +85,12 @@
 															</tr>
 														</tbody>
 													</table>
-										        </div>
-										        <div class="f5074-layout-right">
-										        	<h5>&#60;Icon파일 미리보기&#62;</h5>
+												</div>
+												<div class="f5074-layout-right">
+													<h5>&#60;Icon파일 미리보기&#62;</h5>
 													<div id="image_container" style="width: 300px; height: 300px;"></div>
-										        </div>
-										    </div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>

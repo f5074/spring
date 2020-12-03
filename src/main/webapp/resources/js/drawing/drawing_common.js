@@ -286,23 +286,13 @@ function loadEquipmentIconList(fileId){
 				
 			}
 			
-			
+			$('[data-toggle="tooltip"]').tooltip("show");
 		}
 	});	
 };
 
 function onMouseMove(event) {
 	var tdElements = document.getElementById("equipmentTable").getElementsByTagName('td');
-    var len = tdElements.length;
-    var price = 0;
-    for(var i=0; i<len;i++) {
-        var temp = tdElements.item(i).innerText.valueOf();
-        if(temp.indexOf('결제금액') != -1) {
-            price = tdElements.item(i+1).innerText;
-            alert(price);
-        }        
-    }
-	
 	
 	var divEl = $('#image_container');
 	var divX = divEl.offset().left;
@@ -392,6 +382,7 @@ function clickDrawing(fileId) {
 			alert('error');
 		},
 		success : function(result) {
+			$('[data-toggle="tooltip"]').tooltip("hide");
 			clearImage();
 			loadImage(result);
 			loadEquipmentList(result[0].fileId);

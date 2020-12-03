@@ -4,8 +4,8 @@
 <jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
 <jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-<script src="<c:url value="/js/drawing/drawingController.js?v=112401333"/>" ></script>
-<script src="<c:url value="/js/drawing/drawing_tootip.js"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_common.js?v=12030900"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_tootip.js?v=12030900"/>" ></script>
 
 <script>
 	$(document).ready(function() {
@@ -16,17 +16,18 @@
 	function updateEquipment(){
 		var myTableArray = [];
 		
+
 		$("#equipmentView tr").each(function() {
-	       var arrayOfThisRow = [];
-	       var tableData = $(this).find('td');
-	       if (tableData.length > 0) {
-	           tableData.each(function() {
-	        	   arrayOfThisRow.push($(this).text()); 
-	        	   });
-	           myTableArray.push(arrayOfThisRow);
-	       }
+			var arrayOfThisRow = [];
+			var tableData = $(this).find('td');
+			if (tableData.length > 0) {
+				tableData.each(function() {
+					arrayOfThisRow.push($(this).text());
+				});
+				myTableArray.push(arrayOfThisRow);
+			}
 		});
-		
+
 		for (var rowIdx = 0; rowIdx < myTableArray.length; rowIdx++) {
 			$.ajax({
 				url : "updateEquipment",
@@ -34,16 +35,15 @@
 				data : {
 					eqpX : myTableArray[rowIdx][7],
 					eqpY : myTableArray[rowIdx][8],
-					eqpId: myTableArray[rowIdx][2]
+					eqpId : myTableArray[rowIdx][2]
 				},
 				success : function(result) {
 				}
 			});
 			$("#modalContent").html("등록한 설비를 모두 저장 했습니다.");
-			$("#modal").modal("show");	
+			$("#modal").modal("show");
 		}
-		
-		
+
 	};
 </script>
 
@@ -78,12 +78,10 @@
 								<div class="box-header with-border">
 									<h3 class="box-title">Icon List</h3>
 									<div class="box-tools pull-right">
-
 									</div>
 								</div>
 								<div class="box-body" style="height: 200px;">
 									<div id="equipmentIconView" class="table-responsive" style="width:100%; height:100%; overflow:auto">
-
 									</div>
 								</div>
 							</div>

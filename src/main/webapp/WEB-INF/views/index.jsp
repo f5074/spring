@@ -4,8 +4,8 @@
 <jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
 <jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-<script src="<c:url value="/js/drawing/drawingController.js?v=11240936"/>" ></script>
-<script src="<c:url value="/js/drawing/drawing_tootip.js"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_common.js?v=12030900"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_tootip.js?v=12030900"/>" ></script>
 
 <script>
 	$(document).ready(function() {

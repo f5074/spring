@@ -53,6 +53,7 @@
 									<li><a href="/spring/drawing/user/equipmentPage">장비 등록</a></li>
 								</ul></li>
 					<li><a href="/spring/drawing/user/managementPage">도면-장비 관리</a></li>
+					<li><a href="/spring/drawing/user/uploadFilePage">파일 관리</a></li>
 				</ul>
 			</div>
 		</div>

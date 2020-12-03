@@ -34,4 +34,9 @@ public class CommonController {
 	public String managementPage() {
 		return "drawing/user/managementPage";
 	}
+	
+	@RequestMapping(value = { "uploadFilePage", "drawing/user/uploadFilePage" }, method = RequestMethod.GET)
+	public String uploadFilePage() {
+		return "drawing/user/uploadFilePage";
+	}
 }
