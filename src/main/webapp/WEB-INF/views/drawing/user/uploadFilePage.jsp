@@ -4,13 +4,15 @@
 <jsp:include page="/WEB-INF/views/drawing/template/footer.jsp" />
 <jsp:include page="/WEB-INF/views/drawing/template/modal.jsp" />
 
-<script src="<c:url value="/js/drawing/drawing_common.js?v=12030900"/>" ></script>
-<script src="<c:url value="/js/drawing/drawing_tootip.js?v=12030900"/>" ></script>
-<script src="<c:url value="/js/drawing/drawing_file_upload.js?v=12031000"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_common.js?v=12140900"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_tootip.js?v=12140900"/>" ></script>
+<script src="<c:url value="/js/drawing/drawing_file_upload.js?v=12141000"/>" ></script>
 
 <script>
 	$(document).ready(function() {
 		selectEquipmentList();
+		selectFileList('C:\\DEV\\Downloads\\');
+		
 		$('#fileDir').val('C:\\DEV\\Downloads\\');
 		$('#fileDownloadDir').val('C:\\DEV\\Downloads\\');
 		
@@ -24,6 +26,10 @@
 		
 		$('#btnLocalDownload').click(function(event){
 			onClickLocalDownload(event);
+		});
+		
+		$('#btnSelectFileList').click(function(event){
+			onClickSelectFileList(event);
 		});
 	});
 	
@@ -84,6 +90,7 @@
 									<div class="box-tools pull-right">
 										<input type="button" id="btnDownload" name="btnDownload" class="btn btn-danger" value="다운로드">
 										<input type="button" id="btnLocalDownload" name="btnLocalDownload" class="btn btn-danger" value="Local 다운로드">
+										<input type="button" id="btnSelectFileList" name="btnSelectFileList" class="btn btn-danger" value="Local FileList">
 									</div>
 								</div>
 								<div class="box-body" style="height: 400px;">
@@ -101,6 +108,23 @@
 											</table>
 										</div>
 									</div>
+								</div>
+							</div>
+						</div>
+						<!-- .Content -->
+					</div>
+					<!-- .Content Row -->
+					<!-- Content Row -->
+					<div class="row">
+						<!-- Content -->
+						<div class="col-md-12">
+							<div class="box box-danger">
+								<div class="box-header with-border">
+									<h3 class="box-title">File List</h3>
+									<div class="box-tools pull-right"></div>
+								</div>
+								<div class="box-body" style="height: 200px;">
+									<div id="fileView" class="table-responsive" style="width:100%; height:100%; overflow:auto"></div>
 								</div>
 							</div>
 						</div>

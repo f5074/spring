@@ -13,3 +13,8 @@ div.f5074-layout-right {
 	float: right;
 	box-sizing: border-box;
 }
+
+
+.progress { position:relative; width:100%; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
+.bar { background-color: #337ab7; width:0%; height:20px; border-radius: 3px; }
+.percent { position:absolute; display:inline-block; top:1px

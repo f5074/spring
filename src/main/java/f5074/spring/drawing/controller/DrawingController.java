@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import f5074.spring.common.domain.DrawingVO;
 import f5074.spring.common.domain.EquipmentVO;
+import f5074.spring.common.domain.FileVO;
 import f5074.spring.common.domain.IconVO;
 import f5074.spring.drawing.mapper.DrawingMapper;
 
@@ -79,6 +80,39 @@ public class DrawingController {
 		return res;
 	}
 	
+	@RequestMapping(value = { "selectFileList", "drawing/user/selectFileList" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<FileVO> selectFileList( HttpServletRequest request
+							, HttpServletResponse response) throws IOException {
+		String fileDir = "C:\\DEV\\Downloads\\";
+		if(fileDir.substring(fileDir.length()-1, fileDir.length()) == "/" || fileDir.substring(fileDir.length()-1, fileDir.length()) == "\\") {
+			
+		}else {
+			fileDir += "\\";
+		}
+		return subDirList(fileDir);
+	}
+	
+	private List<FileVO> subDirList(String fileDir) throws IOException {
+		// https://ra2kstar.tistory.com/133
+		List<FileVO> result = new ArrayList<FileVO>();
+		File dir = new File(fileDir); 
+		File[] fileList = dir.listFiles(); 
+		for (int rowIdx = 0; rowIdx < fileList.length; rowIdx++) {
+			File file = fileList[rowIdx];
+			if (file.isFile()) {
+				FileVO vo = new FileVO();
+				vo.setFileId(rowIdx);
+				vo.setFileNm(file.getName());
+				result.add(vo);
+			} else if (file.isDirectory()) {
+//				subDirList(file.getCanonicalPath().toString());
+			}
+		}
+		return result;
+	}
+	
+	
 	@RequestMapping(value = { "insertIcon", "drawing/user/insertIcon" }, method = RequestMethod.POST, consumes = { "multipart/form-data" })
 	@ResponseBody
 	public int insertIcon(HttpServletRequest request, IconVO vo , @RequestParam(value = "uploadFile") MultipartFile uploadFile) throws IOException{
@@ -108,7 +142,7 @@ public class DrawingController {
 		if(!file.exists()) {
 			file.mkdirs();
 		}
-		
+		System.out.println("Start");
 		// 파일 해당 경로에 업로드
 		FileOutputStream fos = new FileOutputStream(dir + uploadFile.getOriginalFilename());
 		InputStream is = uploadFile.getInputStream();
@@ -121,6 +155,7 @@ public class DrawingController {
 		} catch (Exception ex) {
 			throw new RuntimeException("[File Upload]" + ex.getMessage());
 		} finally {
+			System.out.println("End");
 			fos.close();
 		}
 	}
@@ -234,15 +269,16 @@ public class DrawingController {
 			
 		}else {
 			fileDir += "\\";
-		}
-		
+		}	
+		String encodingFileNm = new String(fileNm.getBytes("UTF-8"), "8859_1");
+
 		String FullDir = fileDir + fileNm;
 		System.out.println(FullDir);	
-		String contentType = "image/png";
+		String contentType = "application/octet-stream";
 		long fileLength = 0;
 		FileInputStream fis = new FileInputStream(FullDir);
 		fileLength =  fis.getChannel().size();
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileNm + "\";");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + encodingFileNm + "\";");
 		response.setHeader("Content-Transfer-Encoding", "binary");
 		response.setHeader("Content-Type", contentType);
 		response.setHeader("Content-Length", "" + fileLength);

@@ -83,3 +83,22 @@
 	</div>
 </div>
 <!-- .캡쳐용 모달 팝업 -->
+
+<!-- progress Modal -->
+<div class="modal fade" id="pleaseWaitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>Upload processing...</h3>
+			</div>
+			<div class="modal-body">
+				<!-- progress , bar, percent를 표시할 div 생성한다. -->
+				<div class="progress">
+					<div class="bar"></div>
+					<div class="percent">0%</div>
+				</div>
+				<div id="status"></div>
+			</div>
+		</div>
+	</div>
+</div>

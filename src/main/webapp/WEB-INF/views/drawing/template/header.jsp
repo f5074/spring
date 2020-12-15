@@ -15,7 +15,7 @@
 <!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
 <link rel="stylesheet" href="<c:url value="/css/_all-skins.min.css"/>">
 <!-- F5074 Common style -->
-<link rel="stylesheet" href="<c:url value="/css/style.css?v=3"/>">
+<link rel="stylesheet" href="<c:url value="/css/style.css?v=4"/>">
 
 <!-- JQuery 2.1.4 -->
 <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
